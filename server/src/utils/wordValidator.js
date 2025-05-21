@@ -1,4 +1,4 @@
-class CraftValidator {
+class WordValidator {
   static validate(craft) {
     const { english, russian, userId } = craft;
     if (!english || typeof english !== 'string' || english.trim() === '') {
@@ -26,4 +26,4 @@ class CraftValidator {
   }
 }
 
-module.exports = CraftValidator;
+module.exports = WordValidator;

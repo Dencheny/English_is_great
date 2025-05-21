@@ -13,6 +13,7 @@ class AuthService {
     const user = await User.findOne({ where: { email } });
     return user;
   }
+
 }
 
 module.exports = AuthService;

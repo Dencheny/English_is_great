@@ -1,4 +1,4 @@
-class CraftValidator {
+class LearnWordValidator {
   static validate(craft) {
     const { wordId, userId, themeId } = craft;
     if (!wordId || typeof wordId !== 'number' || wordId.trim() === '') {
@@ -26,4 +26,4 @@ class CraftValidator {
   }
 }
 
-module.exports = CraftValidator;
+module.exports = LearnWordValidator;
