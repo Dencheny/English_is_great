@@ -71,12 +71,12 @@ module.exports = ThemeService
 //     });
 //   }
 
-  static getOneTheme(id) {
-    return Theme.findByPk(id, {
-      include: [{ model: Word, as: 'words' }],
-    });
-  }
-}
+//   static getOneTheme(id) {
+//     return Theme.findByPk(id, {
+//       include: [{ model: Word, as: 'words' }],
+//     });
+//   }
+// }
 
 module.exports = ThemeService;
 
