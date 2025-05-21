@@ -1,25 +1,23 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class LearnWord extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      this.belongsTo(models.User, { foreignKey: 'userId' });
+      this.belongsTo(models.Word, { foreignKey: 'wordId' });
+      this.belongsTo(models.Theme, { foreignKey: 'themeId' });
     }
   }
-  LearnWord.init({
-    wordId: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER,
-    themeId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'LearnWord',
-  });
+  LearnWord.init(
+    {
+      wordId: DataTypes.INTEGER,
+      userId: DataTypes.INTEGER,
+      themeId: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'LearnWord',
+    }
+  );
   return LearnWord;
 };
