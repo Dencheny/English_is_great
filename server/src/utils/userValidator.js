@@ -1,4 +1,4 @@
-class CraftValidator {
+class UserValidator {
   static validate(craft) {
     const { name, email, password } = craft;
     if (!name || typeof name !== 'string' || name.trim() === '') {
@@ -26,4 +26,4 @@ class CraftValidator {
   }
 }
 
-module.exports = CraftValidator;
+module.exports = UserValidator;

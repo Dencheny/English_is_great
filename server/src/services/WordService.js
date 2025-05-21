@@ -10,6 +10,20 @@ class WordService {
     return Word.create(data);
   }
 
+  
+static async getWordsByTheme(themeId, userId) {
+  return Word.findAll({
+    where: { themeId },
+    include: [
+      {
+        model: LearnWord,
+        as: 'learned', // Укажи alias, если есть
+        where: { userId },
+        required: false,
+      },
+    ],
+  });
+}
 // Включение темы через псевдонимы
 
 /*
@@ -27,11 +41,12 @@ static getOneWord(id) {
     return Word.findByPk(id);
   }
 
-  static async editWord(id) {
-    const oneWord= await WordService.getOneWord(id);
+  
+ static async editWord(data) {
+    const oneWord = await WordService.getOneWord(data.id);
+    if (oneWord) throw new Error('Word not found');
     if (oneWord) {
-    //   oneWord.isSale = false;?? Как-будто не надо
-      await oneWord.save();
+      await oneWord.update(data);
     }
     return oneWord;
   }
@@ -39,7 +54,7 @@ static getOneWord(id) {
   /*
 static async editWord(id, data, authorId) {
   const word = await WordService.getOneWord(id);
-  if (!word) throw new Error('Word not found');
+  
   if (word.authorId !== authorId) throw new Error('Forbidden');
   Object.assign(word, data); // Обновляем поля (например, english, russian, themeId)
   await word.save();
@@ -47,19 +62,7 @@ static async editWord(id, data, authorId) {
 }
 
 
-static async getWordsByTheme(themeId, userId) {
-  return Word.findAll({
-    where: { themeId },
-    include: [
-      {
-        model: LearnWord,
-        as: 'learned', // Укажи alias, если есть
-        where: { userId },
-        required: false,
-      },
-    ],
-  });
-}
+
 */
 
 
