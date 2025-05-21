@@ -11,19 +11,19 @@ class WordService {
   }
 
   
-static async getWordsByTheme(themeId, userId) {
-  return Word.findAll({
-    where: { themeId },
-    include: [
-      {
-        model: LearnWord,
-        as: 'learned', // Укажи alias, если есть
-        where: { userId },
-        required: false,
-      },
-    ],
-  });
-}
+// static async getWordsByTheme(themeId, userId) {
+//   return Word.findAll({
+//     where: { themeId },
+//     include: [
+//       {
+//         model: LearnWord,
+//         as: 'learned', // Укажи alias, если есть
+//         where: { userId },
+//         required: false,
+//       },
+//     ],
+//   });
+// }
 // Включение темы через псевдонимы
 
 /*
