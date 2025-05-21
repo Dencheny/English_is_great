@@ -43,12 +43,16 @@ module.exports = {
     await queryInterface.bulkInsert(
       'Words',
       [
+        // ЕДА (themeId: 1)
         { english: 'apple', russian: 'яблоко', themeId: 1, authorId: 1 },
         { english: 'bread', russian: 'хлеб', themeId: 1, authorId: 1 },
         { english: 'cheese', russian: 'сыр', themeId: 1, authorId: 1 },
         { english: 'chicken', russian: 'курица', themeId: 1, authorId: 1 },
         { english: 'water', russian: 'вода', themeId: 1, authorId: 1 },
         { english: 'salt', russian: 'соль', themeId: 1, authorId: 1 },
+        { english: 'banana', russian: 'банан', themeId: 1 },
+        { english: 'carrot', russian: 'морковь', themeId: 1 },
+        { english: 'milk', russian: 'молоко', themeId: 1 },
 
         // АЭРОПОРТ (themeId: 2)
         { english: 'passport', russian: 'паспорт', themeId: 2, authorId: 2 },
@@ -67,6 +71,9 @@ module.exports = {
           authorId: 2,
         },
         { english: 'departure', russian: 'вылет', themeId: 2, authorId: 2 },
+        { english: 'arrival', russian: 'прибытие', themeId: 2 },
+        { english: 'customs', russian: 'таможня', themeId: 2 },
+        { english: 'flight', russian: 'рейс', themeId: 2 },
 
         // ЗНАКОМСТВО С ДРУГОМ (themeId: 3)
         { english: 'hello', russian: 'привет', themeId: 3, authorId: 3 },
@@ -95,6 +102,10 @@ module.exports = {
           themeId: 3,
           authorId: 3,
         },
+        { english: 'where are you from?', russian: 'откуда ты?', themeId: 3 },
+        { english: 'I am from Russia', russian: 'я из России', themeId: 3 },
+        { english: 'goodbye', russian: 'до свидания', themeId: 3 },
+        { english: 'see you soon', russian: 'до скорого', themeId: 3 },
       ],
       {}
     );

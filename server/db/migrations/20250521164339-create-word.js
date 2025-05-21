@@ -30,7 +30,6 @@ module.exports = {
           model: 'Users',
           key: 'id',
         },
-        allowNull: false,
         onDelete: 'cascade',
       },
       createdAt: {
