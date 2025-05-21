@@ -5,6 +5,7 @@ const formatResponse = require('../utils/formatResponse');
 const bcrypt = require('bcrypt');
 
 class AuthController {
+  
   static async signup(req, res) {
     const { name, email, password } = req.body;
 
