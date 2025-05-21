@@ -1,14 +1,14 @@
 const { Theme, Word, LearnWord } = require('../../db/models');
 
 class ThemeService {
- static getAllThemes() {
+  static getAllThemes() {
     return Theme.findAll({ order: [['updatedAt', 'DESC']] });
   }
 
   static getOneTheme(id) {
     return Theme.findByPk(id);
   }
-// метод на вытягивание всех слов, без альяс
+  // метод на вытягивание всех слов, без альяс
   static async getAllThemesForProgressBar(userId) {
     return Theme.findAll({
       order: [['updatedAt', 'DESC']],
@@ -28,17 +28,15 @@ class ThemeService {
   }
 }
 
-module.exports = ThemeService
+module.exports = ThemeService;
 
 // Расширенный сервис с использованием псевдонимов
-
-
 
 // const { Theme, Word, LearnWord } = require('../../db/models');
 
 // class ThemeService {
 
-// Этот метод поможет вытянуть сразу прогресс, 
+// Этот метод поможет вытянуть сразу прогресс,
 // учитывая отношение изученных слов ко всем словам
 
 //   static async getAllThemes(userId) {
@@ -70,13 +68,3 @@ module.exports = ThemeService
 //       };
 //     });
 //   }
-
-//   static getOneTheme(id) {
-//     return Theme.findByPk(id, {
-//       include: [{ model: Word, as: 'words' }],
-//     });
-//   }
-// }
-
-module.exports = ThemeService;
-

@@ -1,6 +1,6 @@
 class LearnWordValidator {
-  static validate(craft) {
-    const { wordId, userId, themeId } = craft;
+  static validate(learnWord) {
+    const { wordId, userId, themeId } = learnWord;
     if (!wordId || typeof wordId !== 'number' || wordId.trim() === '') {
       return {
         isValid: false,
