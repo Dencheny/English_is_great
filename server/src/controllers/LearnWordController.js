@@ -5,7 +5,6 @@ const fs = require('fs/promises');
 const sharp = require('sharp');
 
 class LearnWordController {
-
   static async getLearnWords(req, res) {
     try {
       const learnWords = await CraftService.getAllCrafts(); /// изменить
@@ -27,7 +26,9 @@ class LearnWordController {
       desc,
     });
     if (!isValid) {
-      return res.status(400).json(formatResponse(400, 'Validation failed', null, error));
+      return res
+        .status(400)
+        .json(formatResponse(400, 'Validation failed', null, error));
     }
     // Проверка наличия файла
     if (!req.file) {
@@ -35,7 +36,9 @@ class LearnWordController {
     }
     // Генерация уникального имени файла
     const name = `image_${Date.now()}.webp`;
-    const outputBuffer = await sharp(req.file.buffer).webp({ quality: 80 }).toBuffer();
+    const outputBuffer = await sharp(req.file.buffer)
+      .webp({ quality: 80 })
+      .toBuffer();
     // Создание директории, если не существует
     await fs.mkdir('./public/img', { recursive: true });
 
