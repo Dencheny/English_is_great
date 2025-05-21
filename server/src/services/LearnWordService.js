@@ -1,4 +1,5 @@
-const { LearnWord, Word, Theme } = require('../../db/models');
+const { LearnWord } = require('../../db/models');
+// const { Word, Theme } = require('../../db/models'); для прогрес бара
 
 class LearnWordService {
   // Пометить карточку как изученную
@@ -17,42 +18,43 @@ class LearnWordService {
     return record;
   }
 
-  // Получить прогресс пользователя по всем темам
-  static async getProgress(userId) {
-    const themes = await Theme.findAll({
-      include: [
-        {
-          model: Word,
-          as: 'words',
-          attributes: ['id'],
-        },
-        {
-          model: LearnWord,
-          as: 'learnedWords',
-          where: { userId },
-          required: false,
-          attributes: ['id'],
-        },
-      ],
-    });
-
-    return themes.map(theme => {
-      const totalWords = theme.words.length;
-      const learnedWords = theme.learnedWords.length;
-      return {
-        theme: theme.name,
-        totalWords,
-        learnedWords,
-        progress: totalWords ? (learnedWords / totalWords) * 100 : 0,
-      };
-    });
-  }
-
   // Проверить, изучена ли конкретная карточка
   static async isWordLearned(userId, wordId) {
     const record = await LearnWord.findOne({ where: { userId, wordId } });
     return !!record;
   }
+  
+  
+  // Получить прогресс пользователя по всем темам
+//   static async getProgress(userId) {
+//     const themes = await Theme.findAll({
+//       include: [
+//         {
+//           model: Word,
+//           as: 'words',
+//           attributes: ['id'],
+//         },
+//         {
+//           model: LearnWord,
+//           as: 'learnedWords',
+//           where: { userId },
+//           required: false,
+//           attributes: ['id'],
+//         },
+//       ],
+//     });
+
+//     return themes.map(theme => {
+//       const totalWords = theme.words.length;
+//       const learnedWords = theme.learnedWords.length;
+//       return {
+//         theme: theme.name,
+//         totalWords,
+//         learnedWords,
+//         progress: totalWords ? (learnedWords / totalWords) * 100 : 0,
+//       };
+//     });
+//   }
 }
 
 module.exports = LearnWordService;
