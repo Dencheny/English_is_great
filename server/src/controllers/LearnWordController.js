@@ -82,8 +82,7 @@ class LearnWordController {
     }
   }
 
-
-
 }
 
 module.exports = LearnWordController;
+
