@@ -3,6 +3,8 @@ import axiosInstance from '../../../shared/lib/axiosInstance';
 export default class WordApi {
   static async getAllWords() {
     const response = await axiosInstance.get('/word/progress');
+    // проверка на получение вообще всех сдлов с бд
+     console.log('WordApi.getAllWords response:', response.data);
     return response;
   }
 

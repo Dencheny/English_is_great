@@ -1,7 +1,6 @@
 import axiosInstance from '../../../shared/lib/axiosInstance';
 
-export default class WordApi {
-  // все изученные слова юзера - конкретной темы
+export default class LearnWordApi {
   static async getAllLearnWordsThemeByUser() {
     const response = await axiosInstance.get('/learnWord/progress');
     return response;

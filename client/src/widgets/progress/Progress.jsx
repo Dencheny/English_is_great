@@ -4,8 +4,12 @@ import { useState } from 'react';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
 export default function Progress({ theme, user }) {
-  const targetProgress = Math.floor(1 * 70);
-  const [progress, setProgress] = useState(0);
+console.log('Progress component data:', { theme, userId: user?.data?.id });
+
+
+// статичекий прогрес для примера!
+  // const targetProgress = Math.floor(1 * 70);
+  // const [progress, setProgress] = useState(0);
 
   // const obj = {
   //   now: 10,
@@ -13,18 +17,18 @@ export default function Progress({ theme, user }) {
   //   now2: 90,
   // }
 
-  useEffect(() => {
-    let current = 0;
-    const interval = setInterval(() => {
-      current += 1;
-      if (current >= targetProgress) {
-        current = targetProgress;
-        clearInterval(interval);
-      }
-      setProgress(current);
-    }, 10); // скорость анимации
-    return () => clearInterval(interval);
-  }, [targetProgress]);
+  // useEffect(() => {
+  //   let current = 0;
+  //   const interval = setInterval(() => {
+  //     current += 1;
+  //     if (current >= targetProgress) {
+  //       current = targetProgress;
+  //       clearInterval(interval);
+  //     }
+  //     setProgress(current);
+  //   }, 10); // скорость анимации
+  //   return () => clearInterval(interval);
+  // }, [targetProgress]);
 
   return (
     <div className="progress-container">
@@ -42,11 +46,12 @@ export default function Progress({ theme, user }) {
             color: 'black',
           }}
           className="my-salad-progress"
-          now={progress}
+          now={parseFloat(theme.progress)}
           label=""
         />
-        <div className="progress-label-centered">{progress}%</div>
+        <div className="progress-label-centered">{theme.progress}%</div>
       </div>
     </div>
   );
 }
+// progress заменил theme.progress
