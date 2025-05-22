@@ -1,6 +1,6 @@
 class WordValidator {
-  static validate(craft) {
-    const { english, russian, userId } = craft;
+  static validate(word) {
+    const { english, russian, userId, authorId } = word;
     if (!english || typeof english !== 'string' || english.trim() === '') {
       return {
         isValid: false,
@@ -14,6 +14,12 @@ class WordValidator {
       };
     }
     if (!userId || typeof userId !== 'number' || userId.trim() === '') {
+      return {
+        isValid: false,
+        error: 'UserId must be filled number',
+      };
+    }
+     if (!authorId || typeof authorId !== 'number' || authorId.trim() === '') {
       return {
         isValid: false,
         error: 'UserId must be filled number',

@@ -8,7 +8,7 @@ class LearnWordController {
     try {
       const { user } = res.locals; // из middleware verifyAccessToken
       if (!user) {
-        return res.status(400).json(formatResponse(400, 'Craft not found'));
+        return res.status(401).json(formatResponse(401, 'Unauthorized: User not authenticated'));
       }
       const { userId } = req.body;
       const learnWords = await LearnWordService.markAllLearned(userId); /// изменить
@@ -25,11 +25,11 @@ class LearnWordController {
   }
 
   // все изученные слова юзера - конкретной темы
-  static async getLearnWordByTheme(req, res) {
+  static async getLearnWordsByTheme(req, res) {
     try {
       const { user } = res.locals; // из middleware verifyAccessToken
       if (!user) {
-        return res.status(400).json(formatResponse(400, 'Craft not found'));
+        return res.status(401).json(formatResponse(401, 'Unauthorized: User not authenticated'));
       }
       const { userId, themeId } = req.body;
       const learnWords = await LearnWordService.markAllLearnedByTheme(
@@ -52,7 +52,7 @@ class LearnWordController {
     const { worldId, userId, themeId } = req.body;
     const { user } = res.locals; // из middleware verifyAccessToken
     if (!user) {
-      return res.status(400).json(formatResponse(400, 'Craft not found'));
+      return res.status(401).json(formatResponse(401, 'Unauthorized: User not authenticated'));
     }
     const { isValid, error } = LearnWordValidator.validate({
       worldId,

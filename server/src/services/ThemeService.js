@@ -8,7 +8,7 @@ class ThemeService {
   static getOneTheme(id) {
     return Theme.findByPk(id);
   }
-  // метод на вытягивание всех слов, без альяс
+  // метод на вытягивание всех слов
   static async getAllThemesForProgressBar(userId) {
     return Theme.findAll({
       order: [['updatedAt', 'DESC']],
