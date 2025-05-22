@@ -1,9 +1,11 @@
 // Возможно нужны будут инклуды для вытягивания побочных данных.
 const { Theme, Word, LearnWord } = require("../../db/models");
+const {Sequelize} = require('sequelize')
 
 class WordService {
-  static getAllWords() {
-    return Word.findAll({ order: [["updatedAt", "DESC"]] });
+  static async getAllWords() {
+    const wordsArr = await Word.findAll({ order: [["updatedAt", "DESC"]] });
+    return wordsArr
   }
   // метод на вытягивание всех неизученных слов по выбранной теме, для фронта
   static async getUnlearnedWordsByTheme(themeId, userId) {

@@ -1,19 +1,21 @@
+const isValidId = require("./isValidId");
+
 class LearnWordValidator {
   static validate(learnWord) {
     const { wordId, userId, themeId } = learnWord;
-    if (!wordId || typeof wordId !== 'number' || wordId.trim() === '') {
+    if (isValidId(wordId)) {
       return {
         isValid: false,
         error: 'WordId must be filled number',
       };
     }
-    if (!userId || typeof userId !== 'number' || userId.trim() === '') {
+    if (isValidId(userId)) {
       return {
         isValid: false,
         error: 'UserId must be filled number',
       };
     }
-    if (!themeId || typeof themeId !== 'number' || themeId.trim() === '') {
+    if (isValidId(themeId)) {
       return {
         isValid: false,
         error: 'ThemeId must be filled number',

@@ -6,6 +6,7 @@ const { verifyAccessToken } = require('../middlewares/verifyTokens');
 const themeRouter = express.Router();
 
 // получение всех тем для отрисовки
-themeRouter.get('/themes', ThemeController.getAllThemesFromDb);
+// работает 12:37 22.05
+themeRouter.get('/themes',verifyAccessToken, ThemeController.getAllThemesFromDb);
 
 module.exports = themeRouter;

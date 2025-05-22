@@ -11,13 +11,17 @@ const themeRouter = require('./routes/theme.routes');
 const app = express();
 
 serverConfig(app);
-
-app.use('/api/theme', themeRouter)
+// работает 
 app.use('/api/word', wordRouter);
+// работает
+app.use('/api/theme', themeRouter)
+// работает
 app.use('/api/learnWord', learnWordRouter);
 
-app.use('/api/cookie', cookieRouter);
 app.use('/api/auth', authRouter);
+
+app.use('/api/cookie', cookieRouter);
+
 
 const PORT = process.env.PORT || 3001;
 
