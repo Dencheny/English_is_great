@@ -26,6 +26,10 @@ class ThemeService {
       ],
     });
   }
+
+  static async addTheme(themeName) {
+    return Theme.create({ themeName });
+  }
 }
 
 module.exports = ThemeService;

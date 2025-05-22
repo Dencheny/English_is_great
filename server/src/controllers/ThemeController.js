@@ -23,6 +23,19 @@ class ThemeConroller {
       return res.status(500).json(formatResponse(500, 'Internal Server Error'));
     }
   }
+
+  static async addTheme(req, res) {
+    const { themeName } = req.body;
+    
+    if (!themeName) return res.status(400).json(formatResponse(400, 'themeName is required'));
+    try {
+        const newTheme = await ThemeService.addTheme(themeName)
+        res.status(201).json(formatResponse(201, 'Theme created successfully', newTheme));
+      } catch (error) {
+        console.error('Ошибка при создании темы:', error);
+        res.status(500).json(formatResponse('Ошибка сервера'));
+      }
+  }
 }
 
 module.exports = ThemeConroller
