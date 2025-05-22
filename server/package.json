@@ -11,7 +11,7 @@
     "dbMigUndo": "npx sequelize db:migrate:undo:all",
     "dbSeed": "npx sequelize db:seed:all",
     "dbSeedUndo": "npx sequelize db:seed:undo:all",
-    "dbInit": "npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all"
+    "dbInit": "npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all"
   },
   "keywords": [],
   "author": "",
