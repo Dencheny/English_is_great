@@ -3,8 +3,8 @@ import LoginForm from '../../feature/LoginForm/LoginForm'
 import './LoginPage.css';
 
 
-export default function LoginPage() {
+export default function LoginPage({setUser}) {
   return (
-    <LoginForm/>
+    <LoginForm setUser={setUser}/>
   )
 }

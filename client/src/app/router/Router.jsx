@@ -11,12 +11,14 @@ import ThemeNamePage from '../../pages/themeName/ThemeNamePage';
 import CreateWordPage from '../../pages/createWordPage/CreateWordPage';
 import Footer from '../layout/Footer';
 import EdditWordPage from '../../pages/edditWord/EdditWordPage';
+import ProtectedRoute from '../../shared/hocs/ProtectedRoute'
+
 
 export default function Router({ setUser, logoutHandler, user }) {
   return (
     <Routes>
       <Route element={<Layout logoutHandler={logoutHandler} user={user} />}>
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage setUser={setUser}/>} /> {/*Добавил setUser()*/}
         <Route path="/signup" element={<SignUpPage setUser={setUser} />} />
         <Route path="/theme" element={<ThemeNamePage user={user} />} />
         <Route path="/theme/:id" element={<ThemeCardPage user={user} />} />

@@ -1,21 +1,40 @@
-import { useState } from 'react';
-import UserApi from '../../entities/user/api/UserApi';
-import UserValidate from '../../entities/user/api/UserValidate';
-import { setAccessToken } from '../../shared/lib/axiosInstance';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import UserApi from "../../entities/user/api/UserApi";
+import UserValidate from "../../entities/user/api/UserValidate";
+import { setAccessToken } from "../../shared/lib/axiosInstance";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm({ setUser }) {
+  const navigate = useNavigate();
+
   const loginHandler = async (e) => {
     e.preventDefault();
     const formData = Object.fromEntries(new FormData(e.target));
-    const { isValid, error } = UserValidate.validateLogin(formData);
-    if (!isValid) return alert(error);
-    const res = await UserApi.login(formData);
-    setUser({ status: 'logged', data: res.data.data.user });
-    setAccessToken(res.data.data.accessToken);
+    console.log('1 formData', formData)
+
+    // const { isValid, error } = UserValidate.validateLogin(formData);
+    console.log("2 Дошел");
+    // if (!isValid) return alert(error);
+    // console.log('isValid', isValid)
+    
+    try {
+      const res = await UserApi.login(formData);
+      console.log('3',res.data)
+      
+      // if (res.data.status !== 200) {
+      //   return alert(res.data.message || "Login failed");
+      // }
+      setUser({ status: "logged", data: res.data.data.user });
+
+      setAccessToken(res.data.data.accessToken);
+      console.log("4 Дошел");
+      navigate("/theme");
+    } catch (error) {
+      console.error("Login error:", error);
+      alert(error.response?.data?.message || "Login failed");
+    }
   };
-  const navigate = useNavigate();
 
   return (
     <>
@@ -33,7 +52,7 @@ export default function LoginForm({ setUser }) {
             />
             <button type="submit">Вход</button>
           </form>
-          <button className="secondary-btn" onClick={() => navigate('/signup')}>
+          <button className="secondary-btn" onClick={() => navigate("/signup")}>
             Вы ещё не зарегистрированы?
           </button>
         </div>

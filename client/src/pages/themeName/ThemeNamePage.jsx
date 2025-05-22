@@ -44,7 +44,7 @@ export default function ThemeNamePage() {
   return (
     <div>
       <div>
-        <h1>ПРОГРЕСС</h1>
+        <h1>ВЫБЕРИТЕ ТЕМУ</h1>
       </div>
       <div className="card-grid">
         {isLoading && <h2>Загрузка...</h2>}
