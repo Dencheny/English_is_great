@@ -1,0 +1,48 @@
+.theme-card {
+  background-color: #f0f8ff;
+  border: 2px solid #cce;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  width: 100%;
+  /* height: 35vh; */
+  margin: 40px 15px;
+  max-width: 250px;
+  transition: transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.theme-card:hover {
+  transform: scale(1.03);
+}
+
+.theme-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.theme-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.theme-button:hover {
+  background-color: #45a049;
+}
+
+.theme-button:hover {
+  background-color: #45a049;
+}
+
+.theme-page-title {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0;
+}
