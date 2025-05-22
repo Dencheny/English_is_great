@@ -48,17 +48,15 @@ class WordController {
   static async getUnlearnedWordsByOneTheme(req, res) {
     try {
       const { themeId } = req.params;
-      // console.log('2:themeId',themeId)
       const userId = res.locals.user.id;
       // const userId = 1;
-      // console.log('3:userId', userId)
       const words = await WordService.getUnlearnedWordsByTheme(themeId, userId);
       // console.log('4:words', words)
       const formattedWords = words.map((word) => ({
         id: word.id,
         english: word.english,
         russian: word.russian,
-        theme: word.Theme.themeName,
+        themeId: word.Theme.id,
       }));
       //  console.log('5:formattedWords', formattedWords)
       res.json(formatResponse(200, 'Success', formattedWords));

@@ -22,7 +22,7 @@ export default function ThemeNamePage() {
     }
   }, []);
 
-  const deleteHandler = async (id) => {
+  // const deleteHandler = async (id) => {
     // try {
     // const res = await WordApi.deleteCraft(id);
     // if (res.status === 204) {
@@ -32,7 +32,7 @@ export default function ThemeNamePage() {
     // console.log(error);
     // alert('Что-то пошло не так');
     // }
-  };
+  // };
   return (
 
 
@@ -48,7 +48,7 @@ export default function ThemeNamePage() {
           <ThemeName
             key={el.id}
             themeNames={el}
-            deleteHandler={deleteHandler}
+
           />
         ))}
       </div>

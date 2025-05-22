@@ -34,7 +34,7 @@ module.exports = {
       [
         { themeName: 'Еда' }, // id: 1
         { themeName: 'Аэропорт' }, // id: 2
-        { themeName: 'Знакомство с другом' }, // id: 3
+        { themeName: 'Знакомства' }, // id: 3
       ],
       {}
     );

@@ -8,10 +8,7 @@ const themeRouter = express.Router();
 
 // получение всех тем для отрисовки
 // работает 12:37 22.05
-themeRouter.get(
-  '/themes',
-  /*verifyAccessToken,*/ ThemeController.getAllThemesFromDb
-);
+themeRouter.get('/themes',/*verifyAccessToken,*/ ThemeController.getAllThemesFromDb);
 themeRouter.post('/themes', ThemeController.addTheme);
 
 module.exports = themeRouter;
