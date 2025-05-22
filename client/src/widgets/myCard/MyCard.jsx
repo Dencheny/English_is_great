@@ -26,7 +26,7 @@ export default function MyCard({ myCards, deleteHandler }) {
 
   const handleEdit = (e) => {
     e.stopPropagation();
-    navigate(`/edditCard/${myCards.id}`);
+    navigate(`/edditWord/${myCards.id}`);
   };
 
   return (

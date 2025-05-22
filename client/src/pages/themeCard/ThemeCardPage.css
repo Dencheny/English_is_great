@@ -1,7 +1,46 @@
-.card-grid {
+.my-cards-page {
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #f9fcff, #ecf3fa);
+  min-height: 80vh;
+  font-family: 'Segoe UI', sans-serif;
   display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: center; /* выравнивает по центру */
-  padding: 2rem;
+  flex-direction: column;
+  align-items: center;
+}
+
+.my-cards-page h1 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #2a2a2a;
+}
+
+.my-cards-page > button {
+  margin-bottom: 30px;
+  padding: 10px 20px;
+  background-color: #4f98ff;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.my-cards-page > button:hover {
+  background-color: #357bdc;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.card-grid h2 {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
 }

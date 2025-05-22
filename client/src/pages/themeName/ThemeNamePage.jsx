@@ -44,7 +44,7 @@ export default function ThemeNamePage() {
   return (
     <div className="theme-page">
       <h1 className="theme-page-title">ВЫБЕРИ ТЕМУ</h1>
-      <div className="card-grid">
+      <div className="card-grids">
         {isLoading && <h2>Загрузка...</h2>}
         {themeNames.length === 0 && !isLoading && (
           <h2>Тем пока нет для показа</h2>

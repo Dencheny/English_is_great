@@ -50,13 +50,13 @@ export default function MyCardPage() {
   return (
     <div className="my-cards-page">
       <h1>МОИ КАРТОЧКИ</h1>
-      <button onClick={() => navigate('/edditWord')}>Добавить</button>
+      <button onClick={() => navigate('/createWord')}>Добавить</button>
       <div className="card-grid">
         {isLoading && <h2>Загрузка...</h2>}
         {myCards.length === 0 && !isLoading && (
           <h2>
             Нет карточек для показа, создай{' '}
-            <button onClick={() => navigate('/edditWord')}>
+            <button onClick={() => navigate('/createWord')}>
               свою первую карточку
             </button>
           </h2>

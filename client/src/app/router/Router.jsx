@@ -9,6 +9,7 @@ import SignUpPage from '../../pages/signUpPage/SignUpPage';
 import ThemeNamePage from '../../pages/themeName/ThemeNamePage';
 import CreateWordPage from '../../pages/createWordPage/CreateWordPage';
 import EdditWordPage from '../../pages/edditWord/EdditWordPage';
+import EdditForm from '../../feature/edditForm/EdditForm';
 
 export default function Router({ setUser, logoutHandler, user }) {
   return (

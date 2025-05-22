@@ -1,16 +1,33 @@
 .theme-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 2rem;
-  text-align: center;
+  min-height: 100vh;
+  background-color: #f9f9f9;
 }
 
 .theme-page-title {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 2rem;
   color: #222;
+  text-align: center;
 }
 
-.card-grid {
+.card-grids {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.5rem;
+  width: 100%;
+  max-width: 1000px;
+  justify-items: center; /* Центрирует карточки по горизонтали */
+}
+
+.theme-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* ВЕРТИКАЛЬНОЕ центрирование */
+  padding: 2rem;
+  min-height: 100vh;
 }

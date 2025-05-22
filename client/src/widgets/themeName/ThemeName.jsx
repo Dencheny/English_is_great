@@ -12,7 +12,7 @@ export default function ThemeName({ themeNames }) {
         className="theme-button"
         onClick={() => navigate(`/theme/${themeNames.id}`)}
       >
-        Начнем обучение?
+        Начнем обучение ?
       </button>
     </div>
   );
