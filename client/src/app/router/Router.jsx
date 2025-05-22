@@ -12,6 +12,7 @@ import EdditWordPage from '../../pages/edditWord/EdditWordPage';
 
 import ProtectedRoute from '../../shared/hocs/ProtectedRoute'
 import EdditForm from '../../feature/edditForm/EdditForm';
+import ChatBot from '../../feature/chatBot/ChatBot';
 
 
 export default function Router({ setUser, logoutHandler, user }) {
@@ -26,6 +27,7 @@ export default function Router({ setUser, logoutHandler, user }) {
         <Route path="/myWords" element={<MyCardPage user={user} />} />
         <Route path="/createWord" element={<CreateWordPage user={user} />} />
         <Route path="/edditWord/:id" element={<EdditWordPage user={user} />} />
+        <Route path="/chatGPT" element={<ChatBot user={user} />} />
       {/* <Route element={<Footer logoutHandler={logoutHandler} user={user} />} /> */}
         {/* <Route path="/theme_name" element={<CraftAddPage />} /> */}
         {/* <Route

@@ -1,22 +1,21 @@
-const WordService = require('../services/WordService')
+const WordService = require('../services/WordService');
 const formatResponse = require('../utils/formatResponse');
-const WordValidator = require('../utils/wordValidator')
+const WordValidator = require('../utils/wordValidator');
 
 class WordController {
   // все слова c бд
   static async getAllWordsFromDb(req, res) {
-    
     try {
       const { user } = res.locals; // из middleware verifyAccessToken
       if (!user) {
-        return res.status(401).json(formatResponse(401, 'Unauthorized: User not authenticated'));
+        return res
+          .status(401)
+          .json(formatResponse(401, 'Unauthorized: User not authenticated'));
       }
       const allWords = await WordService.getAllWords(); /// изменить
       // console.log(allWords)
       if (allWords.length === 0) {
-        return res
-          .status(200)
-          .json(formatResponse(200, 'No Word found', []));
+        return res.status(200).json(formatResponse(200, 'No Word found', []));
       }
       return res.status(200).json(formatResponse(200, 'Success', allWords));
     } catch (err) {
@@ -25,18 +24,18 @@ class WordController {
     }
   }
   // все созданные юзером слова
-    static async getAllWordsBuUser(req, res) {
+  static async getAllWordsBuUser(req, res) {
     try {
       const { user } = res.locals; // из middleware verifyAccessToken
       if (!user) {
-        return res.status(401).json(formatResponse(401, 'Unauthorized: User not authenticated'));
+        return res
+          .status(401)
+          .json(formatResponse(401, 'Unauthorized: User not authenticated'));
       }
       const allWords = await WordService.getAllWordsByUser(user.id); /// изменить
       // console.log(allWords)
       if (allWords.length === 0) {
-        return res
-          .status(200)
-          .json(formatResponse(200, 'No Word found', []));
+        return res.status(200).json(formatResponse(200, 'No Word found', []));
       }
       return res.status(200).json(formatResponse(200, 'Success', allWords));
     } catch (err) {
@@ -48,7 +47,6 @@ class WordController {
   // все не изученные слова юзера  - конкретной темы
   static async getUnlearnedWordsByOneTheme(req, res) {
     try {
-      
       const { themeId } = req.params;
       // console.log('2:themeId',themeId)
       const userId = res.locals.user.id;
@@ -56,7 +54,7 @@ class WordController {
       // console.log('3:userId', userId)
       const words = await WordService.getUnlearnedWordsByTheme(themeId, userId);
       // console.log('4:words', words)
-      const formattedWords = words.map(word => ({
+      const formattedWords = words.map((word) => ({
         id: word.id,
         english: word.english,
         russian: word.russian,
@@ -69,20 +67,44 @@ class WordController {
       res.status(500).json(formatResponse(500, 'Internal Server Error'));
     }
   }
+  static async createMoreData(req, res) {
+    const data = req.body;
+    if (!Array.isArray(data) || data.length === 0) {
+      return res
+        .status(400)
+        .json(formatResponse(400, 'Список слов пуст или невалиден'));
+    }
+    try {
+      const insertedWords = await WordService.addWords(data)
+      res.status(201).json(formatResponse(201, 'Success',insertedWords));
+    } catch (error) {
+      if (error.message === 'Words already exists') {
+        res.status(400).json(formatResponse(400, 'Words already exists'));
+      } else {
+        console.error(error);
+        res.status(500).json(formatResponse(500, 'Internal Server Error'));
+      }
+    }
+  }
 
   // создание нового слова или ошибка Word already exists
   static async createOrFindWord(req, res) {
-     try {
+    try {
       const { english, russian, themeId } = req.body;
       // const authorId = null // для проверки в постман
       const authorId = res.locals.user.id;
-       // Предполагаем, что userId берётся из middleware авторизации
+      // Предполагаем, что userId берётся из middleware авторизации
       // берется не из req.body, а из рес локалс для безопасности, потому что юзер может
       // прокинуть совершенно другой authorId , например другого пользователя.
       if (!authorId) {
-      return res.status(404).json(formatResponse(404, 'AuthorId undefined'));
-    }
-      const word = await WordService.addWord({ english, russian, themeId, authorId});
+        return res.status(404).json(formatResponse(404, 'AuthorId undefined'));
+      }
+      const word = await WordService.addWord({
+        english,
+        russian,
+        themeId,
+        authorId,
+      });
       res.status(201).json(formatResponse(201, 'Success', word));
     } catch (error) {
       if (error.message === 'Word already exists') {
@@ -94,24 +116,32 @@ class WordController {
     }
   }
 
-// редактирование
+  // редактирование
   static async updateWord(req, res) {
     try {
       // const { id } = res.locals;
 
       const { id } = req.params;
       const authorId = res.locals.user.id;
-      
+
       const { english, russian, themeId } = req.body;
-      console.log('New data:',english, russian, themeId)
-      const { isValid, error } = WordValidator.validate({ english, russian, themeId, authorId });
+      console.log('New data:', english, russian, themeId);
+      const { isValid, error } = WordValidator.validate({
+        english,
+        russian,
+        themeId,
+        authorId,
+      });
       if (!isValid) {
         return res
           .status(400)
           .json(formatResponse(400, 'Validation failed', null, error));
       }
-      const updatedWord = await WordService.editWord({ english, russian, themeId, authorId }, id);
-       console.log('Updated data:',updatedWord)
+      const updatedWord = await WordService.editWord(
+        { english, russian, themeId, authorId },
+        id
+      );
+      console.log('Updated data:', updatedWord);
       if (!updatedWord) {
         return res.status(400).json(formatResponse(400, 'Word not found'));
       }
@@ -124,32 +154,38 @@ class WordController {
   // удаление
 
   static async deleteOneWord(req, res) {
-  try {
-    // const { id } = req.params; для логики с параметризированным запросом
+    try {
+      // const { id } = req.params; для логики с параметризированным запросом
 
-    const { id } = req.body; // актуальный вариант!
-    const authorId = res.locals.user.id;// тоже для доп защиты, прописывал ранеее
-    
-    // const authorId = 1; роу запрос
+      const { id } = req.body; // актуальный вариант!
+      const authorId = res.locals.user.id; // тоже для доп защиты, прописывал ранеее
 
-    const deletedWord = await WordService.deleteWord(id, authorId);
-    if (!deletedWord) {
-      return res.status(404).json(formatResponse(404, 'Word not found'));
-    }
+      // const authorId = 1; роу запрос
 
-    return res.status(204).json(formatResponse(204, 'Success'));
-  } catch (err) {
-    console.error(err);
-    if (err.message === 'Word not found') {
-      return res.status(404).json(formatResponse(404, 'Word not found'));
+      const deletedWord = await WordService.deleteWord(id, authorId);
+      if (!deletedWord) {
+        return res.status(404).json(formatResponse(404, 'Word not found'));
+      }
+
+      return res.status(204).json(formatResponse(204, 'Success'));
+    } catch (err) {
+      console.error(err);
+      if (err.message === 'Word not found') {
+        return res.status(404).json(formatResponse(404, 'Word not found'));
+      }
+      if (err.message === 'Forbidden') {
+        return res
+          .status(403)
+          .json(
+            formatResponse(
+              403,
+              'Forbidden: You are not allowed to delete this word'
+            )
+          );
+      }
+      return res.status(500).json(formatResponse(500, 'Internal Server Error'));
     }
-    if (err.message === 'Forbidden') {
-      return res.status(403).json(formatResponse(403, 'Forbidden: You are not allowed to delete this word'));
-    }
-    return res.status(500).json(formatResponse(500, 'Internal Server Error'));
   }
 }
 
-}
-
-module.exports = WordController
+module.exports = WordController;

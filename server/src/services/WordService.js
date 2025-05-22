@@ -13,7 +13,7 @@ class WordService {
     const wordsArr = await Word.findAll({ where: { authorId: id } });
     return wordsArr;
   }
-  
+
   // метод на вытягивание всех неизученных слов по выбранной теме, для фронта
   static async getUnlearnedWordsByTheme(themeId, userId) {
     return Word.findAll({
@@ -50,6 +50,10 @@ class WordService {
     }
 
     return word;
+  }
+
+  static async addWords(data) {
+    await Word.bulkCreate(data, { validate: true });
   }
 
   static getOneWord(id) {

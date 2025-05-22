@@ -61,7 +61,6 @@ function SignUpForm({ setUser }) {
   // }, []) // прокидываем пустой массив зависимостей, чтобы не было вечной отрисовки
   // один раз отработал useEffect и остановился?
 
-  const navigate = useNavigate();
 
 
   return (
