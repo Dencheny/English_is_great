@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon src/app.js",
     "help": "npx sequelize help",
     "dbCreate": "npx sequelize db:create",
     "dbDrop": "npx sequelize db:drop",

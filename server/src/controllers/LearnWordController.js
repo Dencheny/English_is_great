@@ -8,7 +8,7 @@ class LearnWordController {
     try {
       const { user } = res.locals; // из middleware verifyAccessToken
       if (!user) {
-        return res.status(400).json(formatResponse(400, 'Craft not found'));
+        return res.status(401).json(formatResponse(401, 'Unauthorized: User not authenticated'));
       }
       const { userId } = req.body;
       const learnWords = await LearnWordService.markAllLearned(userId); /// изменить
@@ -25,13 +25,17 @@ class LearnWordController {
   }
 
   // все изученные слова юзера - конкретной темы
-  static async getLearnWordByTheme(req, res) {
+  static async getLearnWordsByTheme(req, res) {
     try {
       const { user } = res.locals; // из middleware verifyAccessToken
       if (!user) {
-        return res.status(400).json(formatResponse(400, 'Craft not found'));
+        return res.status(401).json(formatResponse(401, 'Unauthorized: User not authenticated'));
       }
-      const { userId, themeId } = req.body;
+      const { themeId } = req.body;
+      
+      const userId = 2
+      console.log('req.body', req.body)
+      console.log('userId, themeId',userId, themeId)
       const learnWords = await LearnWordService.markAllLearnedByTheme(
         userId,
         themeId
@@ -49,13 +53,19 @@ class LearnWordController {
   }
 // запись в бд изученного слова
   static async createLearnWord(req, res) {
-    const { worldId, userId, themeId } = req.body;
-    const { user } = res.locals; // из middleware verifyAccessToken
-    if (!user) {
-      return res.status(400).json(formatResponse(400, 'Craft not found'));
-    }
+    const { themeId } = req.params;
+    console.log('themeId', typeof themeId)
+    const { wordId } = req.body;
+    console.log('wordId', typeof wordId)
+    // const userId = res.locals.user.id;
+    const userId = 1
+    console.log('userId', typeof userId)
+    // const { user } = res.locals; // из middleware verifyAccessToken
+    // if (!user) {
+    //   return res.status(401).json(formatResponse(401, 'Unauthorized: User not authenticated'));
+    // }
     const { isValid, error } = LearnWordValidator.validate({
-      worldId,
+      wordId,
       userId,
       themeId,
     });
@@ -65,12 +75,12 @@ class LearnWordController {
         .json(formatResponse(400, 'Validation failed', null, error));
     }
     try {
-      const { record, created } = LearnWordService.createLearnWordByDb({
-        worldId,
+      const { record, created } = await LearnWordService.createLearnWordByDb({
+        wordId,
         userId,
         themeId,
       });
-      if (!created) {
+      if (created) {
         return res
           .status(200)
           .json(formatResponse(200, 'already exist learnWord', record));

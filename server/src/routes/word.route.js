@@ -1,18 +1,25 @@
-const express = require('express');
-const wordController = require('../controllers/wordController');
-const validateId = require('../middlewares/validateId');
-const { verifyAccessToken } = require('../middlewares/verifyTokens');
+const express = require("express");
+const WordController = require("../controllers/WordController");
+const validateId = require("../middlewares/validateId");
+const { verifyAccessToken } = require("../middlewares/verifyTokens");
+// Вест роутер отрабтаывает , если не включать верификацию токенов! 22.05 12:33
+const wordRouter = express.Router();
+// все слова c бд для реализации общего прогресс бар (работает с роу запросом)
+wordRouter.get("/progress",verifyAccessToken, WordController.getAllWordsFromDb);
 
-const craftRouter = express.Router();
-craftRouter.get('/', CraftController.getCrafts);
-craftRouter.post('/', verifyAccessToken, CraftController.createCraft);
-craftRouter.get('/:id', validateId, CraftController.getCraftById);
-craftRouter.patch('/:id', validateId, CraftController.updateCraft);
-craftRouter.delete(
-  '/:id',
-  validateId,
-  verifyAccessToken,
-  CraftController.deleteOneCraft
-);
+// создание нового слова или ошибка Word already exists (работает с роу запросом)
+wordRouter.post("/createWord", verifyAccessToken, WordController.createOrFindWord);
 
-module.exports = craftRouter;
+// все не изученные слова юзера  - конкретной темы (работает!!! с роу запросом)
+wordRouter.get("/theme/:themeId",verifyAccessToken, validateId, WordController.getUnlearnedWordsByOneTheme);
+//  редактирование (работает)
+wordRouter.patch("/edditWord/:id",verifyAccessToken, validateId, WordController.updateWord);
+// удаление
+// (работает с параметизированным запросом)
+// wordRouter.delete("/edditWord/:id", validateId, WordController.deleteOneWord);
+
+// удаление через логику рек бади на клиенте
+// работает тоже! Не отклоняясь от логики excalidraw
+wordRouter.delete("/myWord", WordController.deleteOneWord);
+
+module.exports = wordRouter;

@@ -1,92 +1,85 @@
 // Возможно нужны будут инклуды для вытягивания побочных данных.
-const { Word } = require('../../db/models');
+const { Theme, Word, LearnWord } = require("../../db/models");
+const {Sequelize} = require('sequelize')
 
 class WordService {
-    static getAllWords() {
-    return Word.findAll({ order: [['updatedAt', 'DESC']] });
+  static async getAllWords() {
+    const wordsArr = await Word.findAll({ order: [["updatedAt", "DESC"]] });
+    return wordsArr
+  }
+  // метод на вытягивание всех неизученных слов по выбранной теме, для фронта
+  static async getUnlearnedWordsByTheme(themeId, userId) {
+    return Word.findAll({
+      where: {
+        themeId,
+        '$LearnWords.id$': { [Sequelize.Op.is]: null }, // Только неизученные слова
+      },
+      include: [
+        {
+          model: Theme, // Включаем тему для получения её данных (например, themeName)
+        },
+        {
+          model: LearnWord,
+          where: { userId },
+          required: false, // Левый join, чтобы включить слова без записей в LearnWord
+        },
+      ],
+      order: [['updatedAt', 'DESC']],
+    });
   }
 
-  static addWord(data) {
-    return Word.create(data);
-  }
-
+ static async addWord(data) {
+  const { english, russian, themeId, authorId } = data;
   
-// static async getWordsByTheme(themeId, userId) {
-//   return Word.findAll({
-//     where: { themeId },
-//     include: [
-//       {
-//         model: LearnWord,
-//         as: 'learned', // Укажи alias, если есть
-//         where: { userId },
-//         required: false,
-//       },
-//     ],
-//   });
-// }
-// Включение темы через псевдонимы
-
-/*
-
-static getOneWord(id) {
-  return Word.findByPk(id, {
-    include: [{ model: Theme, as: 'theme' }],
+  // Проверяем, существует ли слово с такими english, russian и themeId
+  const [word, created] = await Word.findOrCreate({
+    where: { english, russian, themeId },
+    defaults: { authorId }, // Значения, которые будут использованы при создании
   });
+
+  // Если слово уже существует, выбрасываем ошибку
+  if (!created) {
+    throw new Error('Word already exists');
+  }
+
+  return word;
 }
-
-*/
-
 
   static getOneWord(id) {
     return Word.findByPk(id);
   }
-
   
- static async editWord(data) {
-    const oneWord = await WordService.getOneWord(data.id);
-    if (oneWord) throw new Error('Word not found');
+// редакт
+  static async editWord(data, id) {
+    const oneWord = await WordService.getOneWord(id);
+    if (!oneWord) throw new Error("Word not found");
     if (oneWord) {
       await oneWord.update(data);
     }
     return oneWord;
   }
-  // Расширенный метод edit с псевдонимами
-  /*
-static async editWord(id, data, authorId) {
-  const word = await WordService.getOneWord(id);
-  
-  if (word.authorId !== authorId) throw new Error('Forbidden');
-  Object.assign(word, data); // Обновляем поля (например, english, russian, themeId)
-  await word.save();
-  return word;
-}
-
-
-
-*/
-
 
   static async deleteWord(id, authorId) {
     const oneWord = await WordService.getOneWord(id);
-    if (!oneWord) throw new Error('Word not found');
-    if (oneWord.authorId !== authorId) throw new Error('Forbidden');
-    
-      await oneWord.destroy();
-    
+    if (!oneWord) throw new Error("Word not found");
+    if (oneWord.authorId !== authorId) throw new Error("Forbidden");
+
+    await oneWord.destroy();
+
     return oneWord;
   }
 
   // Если будем реализовывать поиск
-//   static async search(query) {
-//     const crafts = await Craft.findAll({
-//       where: {
-//         title: {
-//           [Op.iLike]: `%${query}%`,
-//         },
-//       },
-//     });
-//     return crafts;
-//   }
+  //   static async search(query) {
+  //     const crafts = await Craft.findAll({
+  //       where: {
+  //         title: {
+  //           [Op.iLike]: `%${query}%`,
+  //         },
+  //       },
+  //     });
+  //     return crafts;
+  //   }
 }
 
-module.exports = WordService
+module.exports = WordService;

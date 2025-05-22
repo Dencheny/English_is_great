@@ -1,6 +1,7 @@
+const isValidId = require('./isValidId')
 class WordValidator {
-  static validate(craft) {
-    const { english, russian, userId } = craft;
+  static validate(word) {
+    const { english, russian, themeId, authorId } = word;
     if (!english || typeof english !== 'string' || english.trim() === '') {
       return {
         isValid: false,
@@ -13,10 +14,20 @@ class WordValidator {
         error: 'Russian must be filled string',
       };
     }
-    if (!userId || typeof userId !== 'number' || userId.trim() === '') {
+    // if (!userId || typeof (+userId) !== 'number' || userId.trim() === '')
+      if (isValidId(themeId)) {
+        console.log('themeId', typeof themeId)
       return {
         isValid: false,
         error: 'UserId must be filled number',
+      };
+    }
+    //  if (!authorId || typeof +authorId !== 'number' || authorId.trim() === '') 
+    if (isValidId(authorId)) {
+      console.log('authorId:', authorId)
+      return {
+        isValid: false,
+        error: 'authorId must be filled number',
       };
     }
     return {
