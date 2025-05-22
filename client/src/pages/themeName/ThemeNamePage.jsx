@@ -2,32 +2,24 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import ThemeName from '../../widgets/themeName/ThemeName';
+import ThemeApi from '../../entities/user/api/themeApi';
 
 export default function ThemeNamePage() {
-  const [themeNames, setThemeNames] = useState([
-    { id: 1, themeName: 'Plane' },
-    { id: 2, themeName: 'City' },
-    { id: 3, themeName: 'World' },
-    { id: 4, themeName: 'News' },
-    { id: 5, themeName: 'Animals' },
-    { id: 6, themeName: 'Name' },
-    { id: 7, themeName: 'Famale' },
-    { id: 8, themeName: 'Moralle' },
-    { id: 9, themeName: 'Life' },
-    { id: 10, themeName: 'Beach' },
-  ]);
+  const [themeNames, setThemeNames] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     setIsLoading(true);
-    // try {
-    // WordApi.getAllTheme().then((res) => {
-    //   setThemeNames(res.data.data);
-    //   setIsLoading(false);
-    // });
-    // } catch (error) {
-    // console.log(error);
+    try {
+    ThemeApi.getAllThemes().then((res) => {
+      console.log(res.data.data)
+      setThemeNames(res.data.data);
+      setIsLoading(false);
+    });
+    } catch (error) {
+    console.log(error);
     setIsLoading(false);
-    // }
+    }
   }, []);
 
   const deleteHandler = async (id) => {
