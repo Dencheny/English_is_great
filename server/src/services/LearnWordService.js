@@ -9,7 +9,8 @@ class LearnWordService {
     });
     return learnWordArr;
   }
-  // получить все изученные слова конкретной темы
+
+  // получить все изученные юзером слова конкретной темы для прогресса 
   static async markAllLearnedByTheme(userId, themeId) {
     const learnWordArr = await LearnWord.findAll({
       where: { userId, themeId },
