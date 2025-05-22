@@ -1,6 +1,6 @@
 .footer {
   background: linear-gradient(45deg, #ff7d97, #ffcd69, #e0e9ee, #89df8f);
-  padding: 1.5rem 2rem;
+  padding: 0.5rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;

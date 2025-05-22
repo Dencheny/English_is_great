@@ -1,18 +1,19 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import './ThemeName.css';
 
-export default function ThemeName({ themeNames, user }) {
-
+export default function ThemeName({ themeNames }) {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <div>
-        <h2>{themeNames.themeName}</h2>
-      </div>
-      <div>
-        <button onClick={() => navigate('/theme/:id')}>Начнем обучение ?</button>
-      </div>
+    <div className="theme-card">
+      <h2 className="theme-title">{themeNames.themeName}</h2>
+      <button
+        className="theme-button"
+        onClick={() => navigate(`/theme/${themeNames.id}`)}
+      >
+        Начнем обучение?
+      </button>
     </div>
   );
 }
