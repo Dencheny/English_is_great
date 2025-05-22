@@ -50,20 +50,3 @@ export default function Progress({ theme, user }) {
     </div>
   );
 }
-
-{
-  /* <div className="progress-wrapper">
-  <ProgressBar
-    now={progress}
-    style={{
-      width: '70%',
-      height: '30px',
-      borderRadius: '30px',
-      position: 'relative',
-    }}
-    className="my-salad-progress"
-    label="" // Отключаем встроенный label
-  />
-  <div className="progress-label-centered">{progress}%</div>
-</div> */
-}
