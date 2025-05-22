@@ -1,5 +1,5 @@
 const express = require('express');
-const authRouter = require('./routes/Auth.routes');
+const authRouter = require('./routes/auth.routes');
 const cookieRouter = require('./routes/cookie.route');
 const serverConfig = require('./configs/serverConfig');
 const wordRouter = require('./routes/word.route');
@@ -14,7 +14,7 @@ serverConfig(app);
 // работает 
 app.use('/api/word', wordRouter);
 // работает
-app.use('/api/theme', themeRouter)
+app.use('/api/theme', themeRouter);
 // работает
 app.use('/api/learnWord', learnWordRouter);
 
