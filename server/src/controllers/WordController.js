@@ -12,7 +12,27 @@ class WordController {
         return res.status(401).json(formatResponse(401, 'Unauthorized: User not authenticated'));
       }
       const allWords = await WordService.getAllWords(); /// изменить
-      console.log(allWords)
+      // console.log(allWords)
+      if (allWords.length === 0) {
+        return res
+          .status(200)
+          .json(formatResponse(200, 'No Word found', []));
+      }
+      return res.status(200).json(formatResponse(200, 'Success', allWords));
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json(formatResponse(500, 'Internal Server Error'));
+    }
+  }
+  // все созданные юзером слова
+    static async getAllWordsBuUser(req, res) {
+    try {
+      const { user } = res.locals; // из middleware verifyAccessToken
+      if (!user) {
+        return res.status(401).json(formatResponse(401, 'Unauthorized: User not authenticated'));
+      }
+      const allWords = await WordService.getAllWordsByUser(user.id); /// изменить
+      // console.log(allWords)
       if (allWords.length === 0) {
         return res
           .status(200)

@@ -7,11 +7,15 @@ const wordRouter = express.Router();
 // все слова c бд для реализации общего прогресс бар (работает с роу запросом)
 wordRouter.get("/progress",verifyAccessToken, WordController.getAllWordsFromDb);
 
-// создание нового слова или ошибка Word already exists (работает с роу запросом)
-wordRouter.post("/createWord", verifyAccessToken, WordController.createOrFindWord);
+// все созданные юзером слова
+wordRouter.get("/myWords",verifyAccessToken, WordController.getAllWordsBuUser);
 
 // все не изученные слова юзера  - конкретной темы (работает!!! с роу запросом)
 wordRouter.get("/theme/:themeId",verifyAccessToken, validateId, WordController.getUnlearnedWordsByOneTheme);
+
+// создание нового слова или ошибка Word already exists (работает с роу запросом)
+wordRouter.post("/createWord", verifyAccessToken, WordController.createOrFindWord);
+
 //  редактирование (работает)
 wordRouter.patch("/edditWord/:id",verifyAccessToken, validateId, WordController.updateWord);
 // удаление

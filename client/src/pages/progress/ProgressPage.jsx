@@ -46,7 +46,7 @@ export default function ProgressPage() {
   return (
     <div className="progress-page">
       <h1>ПРОГРЕСС</h1>
-      <div className="card-grid">
+      <div className="card-grids">
         {isLoading && <h2>Загрузка...</h2>}
         {themes.length === 0 && !isLoading && <h2>Нет пока нет прогресса для показа</h2>}
         {themes.map((el) => (

@@ -1,9 +1,12 @@
+
 import React from "react";
 import UserValidate from "../../entities/user/api/UserValidate";
 import UserApi from "../../entities/user/api/UserApi";
 import axiosInstance, { setAccessToken } from "../../shared/lib/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import './SignUpFrom.css';
+
 
 function SignUpForm({ setUser }) {
 
@@ -41,6 +44,7 @@ function SignUpForm({ setUser }) {
     }
   };
 
+
   // Эта логика уже присутвтует на App.jsx
   // проверка токена, если польщователь был ранне авторизован
   // и перезагрузил страницу
@@ -57,42 +61,22 @@ function SignUpForm({ setUser }) {
   // }, []) // прокидываем пустой массив зависимостей, чтобы не было вечной отрисовки
   // один раз отработал useEffect и остановился?
 
+  const navigate = useNavigate();
+
+
   return (
-    <div>
-      <h1>АНГЛИЙСКИЙ - ЛЕГКО</h1>
-      <div>
+    <div className="signup-container">
+      <h1 className="signup-title">АНГЛИЙСКИЙ — ЛЕГКО</h1>
+      <div className="signup-box">
         <h2>Регистрация</h2>
-        <form onSubmit={signUpHandler}>
-          <div>
-            <input name="name" type="text" required placeholder="Имя" />
-          </div>
-          <div>
-            <input
-              name="email"
-              type="email"
-              required
-              placeholder="Email / Логин"
-            />
-          </div>
-          <div>
-            <input
-              name="password"
-              type="password"
-              required
-              placeholder="Пароль"
-            />
-          </div>
-          <div>
-            <input
-              name="repeatPassword"
-              type="password"
-              required
-              placeholder="Подтверждение пароля"
-            />
-          </div>
-          <button type="submit">Зарегистрироваться</button>
+        <form onSubmit={signUpHandler} className="signup-form">
+          <input name="name" type="text" required placeholder="Имя" />
+          <input name="email" type="email" required placeholder="Email / Логин" />
+          <input name="password" type="password" required placeholder="Пароль" />
+          <input name="repeatPassword" type="password" required placeholder="Подтверждение пароля" />
+          <button type="submit" className="signup-button">Зарегистрироваться</button>
         </form>
-        <button type="submit" onClick={() => navigate("/login")}>
+        <button className="login-button" onClick={() => navigate('/login')}>
           Уже есть аккаунт
         </button>
       </div>

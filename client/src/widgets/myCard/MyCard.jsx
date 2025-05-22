@@ -1,42 +1,52 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './MyCard.css';
 import { useNavigate } from 'react-router-dom';
 
-export default function MyCard({ myCards, deleteHandler, user }) {
-  const [flipped, setFlipped] = useState(false);
-  const [learned, setLearned] = useState(false);
-    const navigate = useNavigate();
+export default function MyCard({ myCards, deleteHandler }) {
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [isOpened, setIsOpened] = useState(() => {
+    const saved = localStorage.getItem('openedCards');
+    const openedIds = saved ? JSON.parse(saved) : [];
+    return openedIds.includes(myCards.id);
+  });
 
-  if (learned) return null;
+  const navigate = useNavigate();
+
+  const handleFlip = () => {
+    setIsFlipped((prev) => !prev);
+
+    if (!isOpened) {
+      const saved = localStorage.getItem('openedCards');
+      const openedIds = saved ? JSON.parse(saved) : [];
+      const updated = [...openedIds, myCards.id];
+      localStorage.setItem('openedCards', JSON.stringify(updated));
+      setIsOpened(true);
+    }
+  };
+
+  const handleEdit = (e) => {
+    e.stopPropagation();
+    navigate(`/edditWord/${myCards.id}`);
+  };
 
   return (
-    <div className="card-wrapper">
-      <div
-        className={`card-container ${flipped ? 'flipped' : ''}`}
-        onClick={() => setFlipped(!flipped)}
-      >
-        <div
-          className={`card ${flipped ? 'card-back' : 'card-front'} ${
-            flipped ? 'opened' : ''
-          }`}
-        >
-          <div className="card-content">
-            <h2>{flipped ? myCards.translation : myCards.word}</h2>
-            {flipped && (
-              <>
-                <button
-                  className="learned-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setLearned(true);
-                    deleteHandler(myCards.id);
-                  }}
-                >
-                  Удалить
-                </button>
-                <button onClick={() => navigate('/eddit')} >Изменить</button>
-              </>
-            )}
+    <div className="card-container" onClick={handleFlip}>
+      <div className={`card ${isFlipped ? 'flipped' : ''} ${isOpened ? 'opened' : ''}`}>
+        <div className="card-face card-front">
+          {myCards.word}
+        </div>
+        <div className="card-face card-back">
+          <div>{myCards.translation}</div>
+          <div className="button-group">
+            <button className="button-complete" onClick={(e) => {
+              e.stopPropagation();
+              deleteHandler(myCards.id);
+            }}>
+              Удалить
+            </button>
+            <button className="button-edit" onClick={handleEdit}>
+              Изменить
+            </button>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 .my-cards-page {
   padding: 40px 20px;
   background: linear-gradient(135deg, #f9fcff, #ecf3fa);
-  min-height: 100vh;
+  min-height: 80vh;
   font-family: 'Segoe UI', sans-serif;
   display: flex;
   flex-direction: column;
