@@ -70,7 +70,7 @@ const ChatBot = () => {
               key={idx}
               className={`chat-bubble ${msg.role === 'user' ? 'user' : 'bot'}`}
             >
-              {msg.role === 'bot' ? (
+              {msg.role === 'assistant' ? (
                 <ReactMarkdown>{msg.content}</ReactMarkdown>
               ) : (
                 msg.content

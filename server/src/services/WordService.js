@@ -53,7 +53,7 @@ class WordService {
   }
 
   static async addWords(data) {
-    await Word.bulkCreate(data, { validate: true });
+    return await Word.bulkCreate(data, { validate: true });
   }
 
   static getOneWord(id) {
