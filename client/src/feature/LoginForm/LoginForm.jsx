@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserApi from "../../entities/user/api/UserApi";
 import UserValidate from "../../entities/user/api/UserValidate";
 import { setAccessToken } from "../../shared/lib/axiosInstance";
@@ -6,6 +6,17 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginForm({ setUser }) {
+    const playSound = () => {
+      const audio = new Audio('../../../public/music/gitpullo.mp3');
+      audio.volume = 0.3;
+      audio.play();
+    };
+  
+    useEffect(() => {
+      setTimeout(() => {
+        playSound();
+      }, 1);
+    }, [])
   const navigate = useNavigate();
 
   const loginHandler = async (e) => {

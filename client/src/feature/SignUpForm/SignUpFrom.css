@@ -1,7 +1,8 @@
 .signup-container {
   max-width: 500px;
-  margin: 0.8rem auto;
+  margin: 6.8rem auto;
   padding: 2rem;
+  height: 60.5vh;
   border-radius: 12px;
   background-color: #f0f8ff;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);

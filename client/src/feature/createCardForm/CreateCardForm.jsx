@@ -18,6 +18,12 @@ export default function CreateCardForm() {
   });
   const [showToast, setShowToast] = useState(false);
 
+  const playSound = () => {
+    const audio = new Audio('../../../public/music/gitpullo.mp3');
+    audio.volume = 0.3
+    audio.play();
+  };
+
   useEffect(() => {
     setIsLoading(true);
     try {
@@ -54,11 +60,10 @@ export default function CreateCardForm() {
       const payload = {
         english,
         russian,
-        themeId:themeId || 1, // этот ID нужен для связи с темой
+        themeId: themeId || 1, // этот ID нужен для связи с темой
       };
 
       const res = await WordApi.createWord(payload);
-
       if (res.data) {
         setShowToast(true);
         setTimeout(() => {
@@ -81,30 +86,30 @@ export default function CreateCardForm() {
         <div className='notification'>Слово успешно добавлено!</div>
       )}
       <h1>ДОБАВИТЬ СВОЁ СЛОВО</h1>
-      <form className='create-word-form' onSubmit={handleSubmit}>
+      <form className="create-word-form" onSubmit={handleSubmit}>
         <input
-          name='english'
-          type='text'
-          placeholder='Слово на Английском'
+          name="english"
+          type="text"
+          placeholder="Слово на Английском"
           value={formData.english}
           onChange={handleChange}
           required
         />
         <input
-          name='russian'
-          type='text'
-          placeholder='Слово на Русском'
+          name="russian"
+          type="text"
+          placeholder="Слово на Русском"
           value={formData.russian}
           onChange={handleChange}
           required
         />
         <Box sx={{ minWidth: 120 }}>
           <FormControl fullWidth>
-            <InputLabel variant='standard' htmlFor='theme'>
-            </InputLabel>
+
+            <InputLabel variant="standard" htmlFor="theme"></InputLabel>
 
             <NativeSelect
-              name='themeId'
+              name="themeId"
               defaultValue={formData.themeId}
               value={formData.themeId}
               onChange={handleChange}
@@ -121,7 +126,9 @@ export default function CreateCardForm() {
             </NativeSelect>
           </FormControl>
         </Box>
-        <button type='submit'>Подтвердить</button>
+        <button type="submit" onClick={() => playSound()}>
+          Подтвердить
+        </button>
       </form>
     </div>
   );

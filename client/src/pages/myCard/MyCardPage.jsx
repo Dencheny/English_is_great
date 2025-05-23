@@ -13,7 +13,6 @@ export default function MyCardPage() {
 
   const [isLoading, setIsLoading] = useState(true);
 
-
   const fetchCads = useCallback(async () => {
     setIsLoading(true);
     try {

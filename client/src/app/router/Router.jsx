@@ -10,10 +10,9 @@ import ThemeNamePage from '../../pages/themeName/ThemeNamePage';
 import CreateWordPage from '../../pages/createWordPage/CreateWordPage';
 import EdditWordPage from '../../pages/edditWord/EdditWordPage';
 
-import ProtectedRoute from '../../shared/hocs/ProtectedRoute'
+import ProtectedRoute from '../../shared/hocs/ProtectedRoute';
 import EdditForm from '../../feature/edditForm/EdditForm';
 import ChatBot from '../../feature/chatBot/ChatBot';
-
 
 export default function Router({ setUser, logoutHandler, user }) {
   return (
@@ -50,8 +49,8 @@ element={
         <Route path="/myWords" element={<MyCardPage user={user} />} />{/*Работает*/}
         <Route path="/createWord" element={<CreateWordPage user={user} />} />{/*Работает*/}
         <Route path="/edditWord/:id" element={<EdditWordPage user={user} />} />{/*Добавил setUser()*/}
-        <Route path="/chatGPT" element={<ChatBot user={user} />} />
 </Route>
+        <Route path="/chatGPT" element={<ChatBot user={user} />} />
        
 
 {/*Роут по умолчанию*/}

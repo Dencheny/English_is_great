@@ -25,8 +25,7 @@ const ChatBot = () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization':
-              `Bearer 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`,
+            Authorization: `Bearer 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`,
             'HTTP-Referer': 'http://localhost',
             'X-Title': 'chat-bot-test',
           },

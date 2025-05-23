@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import ThemeName from '../../widgets/themeName/ThemeName';
 import ThemeApi from '../../entities/user/api/themeApi';
+import './ThemeNamePage.css';
 
 export default function ThemeNamePage() {
   const [themeNames, setThemeNames] = useState([]);
@@ -36,9 +37,9 @@ export default function ThemeNamePage() {
   return (
 
 
-    <div className="theme-page">
-      <h1 className="theme-page-title">ВЫБЕРИ ТЕМУ</h1>
-      <div className="card-grids">
+    <div className="theme-pagesy">
+      <h1 className="theme-page-titlesy">ВЫБЕРИ ТЕМУ</h1>
+      <div className="card-gridsy">
 
         {isLoading && <h2>Загрузка...</h2>}
         {themeNames.length === 0 && !isLoading && (
