@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import MyCard from '../../widgets/myCard/MyCard';
 import { useEffect, useState } from 'react';
 // import WordApi from "../../entities/word/api/WordApi";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './MyCardPage.css';
 import WordApi from '../../entities/user/api/wordApi';
 
@@ -11,6 +11,17 @@ export default function MyCardPage() {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
+
+  const location = useLocation();
+  const [showToast, setShowToast] = useState(false);
+
+  useEffect(() => {
+    if (location.state?.showToast) {
+      setShowToast(true);
+      const timer = setTimeout(() => setShowToast(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [location.state]);
 
   const fetchCads = useCallback(async () => {
     setIsLoading(true);
@@ -52,6 +63,7 @@ export default function MyCardPage() {
 
   return (
     <div className="my-cards-page">
+       {showToast && <div className="notification">Слово успешно изменено!</div>}
       <h1>МОИ КАРТОЧКИ</h1>
       <button onClick={() => navigate('/createWord')}>Добавить</button>
       <div className="card-grid">

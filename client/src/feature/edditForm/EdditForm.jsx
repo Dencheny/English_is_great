@@ -66,12 +66,14 @@ export default function EdditForm() {
 
       const res = await WordApi.updateWord(params?.id, payload);
       // navigate('/myWords');
+      navigate('/myWords', { state: { showToast: true } });
       if (res.data) {
         setShowToast(true);
         setTimeout(() => {
           setShowToast(false);
         }, 1000);
       }
+      
       // alert('Слово успешно изменено:', res.data);
 
       // Очистить форму после создания
@@ -85,7 +87,9 @@ export default function EdditForm() {
   return (
     <>
       <div className='edit-word-page'>
-        {showToast && <div className='notification'>Слово успешно изменено!</div>}
+        {showToast && (
+          <div className='notification'>Слово успешно изменено!</div>
+        )}
         <h1>РЕДАКТИРОВАНИЕ КАРТОЧКИ</h1>
         <form className='edit-word-form' onSubmit={handleSubmit}>
           <input
@@ -106,8 +110,7 @@ export default function EdditForm() {
           />
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
-              <InputLabel variant='standard' htmlFor='theme'>
-              </InputLabel>
+              <InputLabel variant='standard' htmlFor='theme'></InputLabel>
               <NativeSelect
                 name='themeId'
                 value={formData.themeId}
