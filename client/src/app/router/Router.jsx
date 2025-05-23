@@ -36,6 +36,7 @@ export default function Router({ setUser, logoutHandler, user }) {
 
         {/*Роуты под этой строкой будут защищеныыми!*/}
 
+<<<<<<< HEAD
         <Route
           element={
             <ProtectedRoute
@@ -57,6 +58,31 @@ export default function Router({ setUser, logoutHandler, user }) {
           <Route
             path="/edditWord/:id"
             element={<EdditWordPage user={user} />}
+=======
+
+<Route
+element={
+  <ProtectedRoute 
+    isAllowed={user.status === 'logged'}
+    redirectTo='/login'
+  />
+}>
+
+        <Route path="/theme" element={<ThemeNamePage user={user} />} />{/*Работает*/}
+        <Route path="/theme/:id" element={<ThemeCardPage user={user} />} />{/*Работает*/}
+        <Route path="/progress" element={<ProgressPage user={user} />} />{/*Работает*/}
+        <Route path="/myWords" element={<MyCardPage user={user} />} />{/*Работает*/}
+        <Route path="/createWord" element={<CreateWordPage user={user} />} />{/*Работает*/}
+        <Route path="/edditWord/:id" element={<EdditWordPage user={user} />} />{/*Добавил setUser()*/}
+</Route>
+        <Route path="/chatGPT" element={<ChatBot user={user} />} />
+       
+
+{/*Роут по умолчанию*/}
+        <Route path="*" element={
+          <Navigate to ={user.status === 'logged' ? '/theme' : "/login"} replace />
+          } 
+>>>>>>> 5f8aaa6ef96a258f273b5a5d2b39d151b8330180
           />
           {/*Добавил setUser()*/}
         </Route>
