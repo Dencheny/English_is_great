@@ -18,38 +18,46 @@ export default function Router({ setUser, logoutHandler, user }) {
   return (
     <Routes>
       <Route element={<Layout logoutHandler={logoutHandler} user={user} />}>
-        <Route path="/login" element={<LoginPage setUser={setUser} />} />{' '}
-        {/*Работает*/}
-        <Route path="/signup" element={<SignUpPage setUser={setUser} />} />
-        {/*Работает*/}
-        {/*Роуты под этой строкой будут защищеныыми!*/}
+      {/*Доп защита для не авторизованного юзера*/}
         <Route
           element={
             <ProtectedRoute
-              isAllowed={user.status === 'logged'}
-              redirectTo="/signup"
+            isAllowed={user.status !== 'logged'}
+            redirectTo='/theme'
             />
           }
         >
-          <Route path="/theme" element={<ThemeNamePage user={user} />} />
-          {/*Работает*/}
-          <Route path="/theme/:id" element={<ThemeCardPage user={user} />} />
-          {/*Работает*/}
-          <Route path="/progress" element={<ProgressPage user={user} />} />
-          {/*Работает*/}
-          <Route path="/myWords" element={<MyCardPage user={user} />} />
-          {/*Работает*/}
-          <Route path="/createWord" element={<CreateWordPage user={user} />} />
-          {/*Работает*/}
-          <Route
-            path="/edditWord/:id"
-            element={<EdditWordPage user={user} />}
-          />
-          {/*Добавил setUser()*/}
+         <Route path="/login" element={<LoginPage setUser={setUser}/>} /> {/*Работает*/}
+         <Route path="/signup" element={<SignUpPage setUser={setUser} />} />{/*Работает*/}
         </Route>
+       
+
+{/*Роуты под этой строкой будут защищеныыми!*/}
+
+
+<Route
+element={
+  <ProtectedRoute 
+    isAllowed={user.status === 'logged'}
+    redirectTo='/signup'
+  />
+}>
+
+        <Route path="/theme" element={<ThemeNamePage user={user} />} />{/*Работает*/}
+        <Route path="/theme/:id" element={<ThemeCardPage user={user} />} />{/*Работает*/}
+        <Route path="/progress" element={<ProgressPage user={user} />} />{/*Работает*/}
+        <Route path="/myWords" element={<MyCardPage user={user} />} />{/*Работает*/}
+        <Route path="/createWord" element={<CreateWordPage user={user} />} />{/*Работает*/}
+        <Route path="/edditWord/:id" element={<EdditWordPage user={user} />} />{/*Добавил setUser()*/}
+</Route>
         <Route path="/chatGPT" element={<ChatBot user={user} />} />
-        {/*Роут по умолчанию*/}
-        <Route path="*" element={<Navigate to="/signup" replace />} />
+       
+
+{/*Роут по умолчанию*/}
+        <Route path="*" element={
+          <Navigate to ={user.status === 'logged' ? '/theme' : "/signup"} replace />
+          } 
+          />
       </Route>
     </Routes>
   );
