@@ -6,13 +6,15 @@ import { useNavigate } from 'react-router-dom';
 import './MyCardPage.css';
 import WordApi from '../../entities/user/api/wordApi';
 
+
 export default function MyCardPage() {
   const [myCards, setMyCards] = useState([]);
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
 
- const fetchCads = useCallback(async () => {
+
+  const fetchCads = useCallback(async () => {
     setIsLoading(true);
     try {
       WordApi.getAllWordsByUser().then((res) => {
@@ -26,7 +28,9 @@ export default function MyCardPage() {
   }, []);
 
   useEffect(() => {
-    fetchCads();
+
+      fetchCads();
+
   }, [fetchCads]);
 
   const deleteHandler = async (id) => {
@@ -44,12 +48,11 @@ export default function MyCardPage() {
     fetchData();
   };
 
-
   return (
-    <div className="my-cards-page">
+    <div className='my-cards-page'>
       <h1>МОИ КАРТОЧКИ</h1>
       <button onClick={() => navigate('/createWord')}>Добавить</button>
-      <div className="card-grid">
+      <div className='card-grid'>
         {isLoading && <h2>Загрузка...</h2>}
         {myCards.length === 0 && !isLoading && (
           <h2>
