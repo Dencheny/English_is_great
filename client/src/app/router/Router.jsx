@@ -24,44 +24,49 @@ export default function Router({ setUser, logoutHandler, user }) {
           element={
             <ProtectedRoute
               isAllowed={user.status !== 'logged'}
-              redirectTo="/theme"
+              redirectTo='/theme'
             />
           }
         >
-          <Route path="/login" element={<LoginPage setUser={setUser} />} />{' '}
+          <Route path='/login' element={<LoginPage setUser={setUser} />} />{' '}
           {/*Работает*/}
-          <Route path="/signup" element={<SignUpPage setUser={setUser} />} />
+          <Route path='/' element={<LoginPage setUser={setUser} />} />{' '}
+          {/*Работает*/}
+          <Route path='/signup' element={<SignUpPage setUser={setUser} />} />
           {/*Работает*/}
         </Route>
 
         {/*Роуты под этой строкой будут защищеныыми!*/}
 
-<Route
-  element={
-    <ProtectedRoute
-      isAllowed={user.status === 'logged'}
-      redirectTo="/login"
-    />
-  }
->
-  <Route path="/theme" element={<ThemeNamePage user={user} />} />
-  {/*Работает*/}
-  <Route path="/theme/:id" element={<ThemeCardPage user={user} />} />
-  {/*Работает*/}
-  <Route path="/progress" element={<ProgressPage user={user} />} />
-  {/*Работает*/}
-  <Route path="/myWords" element={<MyCardPage user={user} />} />
-  {/*Работает*/}
-  <Route path="/createWord" element={<CreateWordPage user={user} />} />
-  {/*Работает*/}
-  <Route path="/edditWord/:id" element={<EdditWordPage user={user} />} />
-  {/*Добавил setUser()*/}
-</Route>
-<Route path="/chatGPT" element={<ChatBot user={user} />} />
+        <Route
+          element={
+            <ProtectedRoute
+              isAllowed={user.status === 'logged'}
+              redirectTo='/login'
+            />
+          }
+        >
+          <Route path='/theme' element={<ThemeNamePage user={user} />} />
+          {/*Работает*/}
+          <Route path='/theme/:id' element={<ThemeCardPage user={user} />} />
+          {/*Работает*/}
+          <Route path='/progress' element={<ProgressPage user={user} />} />
+          {/*Работает*/}
+          <Route path='/myWords' element={<MyCardPage user={user} />} />
+          {/*Работает*/}
+          <Route path='/createWord' element={<CreateWordPage user={user} />} />
+          {/*Работает*/}
+          <Route
+            path='/edditWord/:id'
+            element={<EdditWordPage user={user} />}
+          />
+          {/*Добавил setUser()*/}
+        </Route>
+        <Route path='/chatGPT' element={<ChatBot user={user} />} />
 
         {/*Роут по умолчанию*/}
         <Route
-          path="*"
+          path='*'
           element={
             <Error404
               to={user.status === 'logged' ? '/theme' : '/signup'}
