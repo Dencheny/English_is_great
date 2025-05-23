@@ -8,6 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
+import DesktopMacTwoToneIcon from '@mui/icons-material/DesktopMacTwoTone';
 
 export default function NavBar({ logoutHandler, user }) {
   const navigate = useNavigate();
@@ -52,6 +53,7 @@ export default function NavBar({ logoutHandler, user }) {
 
           {/* Правая часть — имя и бургер */}
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <DesktopMacTwoToneIcon onClick={() => navigate('/chatGPT')} sx={{ marginRight: 4 }}/>
             <Typography sx={{ marginRight: 2 }}>
               {user?.data?.name || 'Гость'}
             </Typography>
