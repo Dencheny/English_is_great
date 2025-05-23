@@ -25,12 +25,7 @@ console.log('LearnWordController.getLearnWords: No user in res.locals');
       console.error('LearnWordController.getLearnWords error:', err.stack);
       return res.status(500).json(formatResponse(500, 'Internal Server Error'));
     }
-      }
-      return res.status(200).json(formatResponse(200, 'Success', learnWords));
-    } catch (err) {
-      console.error('LearnWordController.getLearnWords error:', err.stack);
-      return res.status(500).json(formatResponse(500, 'Internal Server Error'));
-    }
+    
     //   const { user } = res.locals; // из middleware verifyAccessToken
     //   if (!user) {
     //     return res

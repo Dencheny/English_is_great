@@ -19,14 +19,14 @@ export default function Router({ setUser, logoutHandler, user }) {
   return (
     <Routes>
       <Route element={<Layout logoutHandler={logoutHandler} user={user} />}>
-        <Route path="/login" element={<LoginPage setUser={setUser}/>} /> {/*Добавил setUser()*/}
-        <Route path="/signup" element={<SignUpPage setUser={setUser} />} />
-        <Route path="/theme" element={<ThemeNamePage user={user} />} />
-        <Route path="/theme/:id" element={<ThemeCardPage user={user} />} />
-        <Route path="/progress" element={<ProgressPage user={user} />} />
-        <Route path="/myWords" element={<MyCardPage user={user} />} />
-        <Route path="/createWord" element={<CreateWordPage user={user} />} />
-        <Route path="/edditWord/:id" element={<EdditWordPage user={user} />} />
+        <Route path="/login" element={<LoginPage setUser={setUser}/>} /> {/*Работает*/}
+        <Route path="/signup" element={<SignUpPage setUser={setUser} />} />{/*Работает*/}
+        <Route path="/theme" element={<ThemeNamePage user={user} />} />{/*Работает*/}
+        <Route path="/theme/:id" element={<ThemeCardPage user={user} />} />{/*Работает*/}
+        <Route path="/progress" element={<ProgressPage user={user} />} />{/*Работает*/}
+        <Route path="/myWords" element={<MyCardPage user={user} />} />{/*Работает*/}
+        <Route path="/createWord" element={<CreateWordPage user={user} />} />{/*Работает*/}
+        <Route path="/edditWord/:id" element={<EdditWordPage user={user} />} />{/*Добавил setUser()*/}
         <Route path="/chatGPT" element={<ChatBot user={user} />} />
       {/* <Route element={<Footer logoutHandler={logoutHandler} user={user} />} /> */}
         {/* <Route path="/theme_name" element={<CraftAddPage />} /> */}

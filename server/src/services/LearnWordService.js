@@ -18,7 +18,6 @@ class LearnWordService {
     return learnWordArr;
   }
 
-  
 
   // Пометить карточку как изученную - создаем запись в таблице об изученном слове
   static async createLearnWordByDb({ userId, wordId, themeId }) {
