@@ -34,6 +34,12 @@ export default function ThemeCard({ word, deleteHandler }) {
 
   if (isLearned) return null;
 
+    const playSound = () => {
+    const audio = new Audio('../../../public/music/ozvuchka/CardSound.mp3');
+    audio.volume = 1;
+    audio.play();
+  };
+
   return (
     <div className="card-container" onClick={handleFlip}>
       <div
@@ -41,9 +47,9 @@ export default function ThemeCard({ word, deleteHandler }) {
           isOpened ? 'opened' : ''
         }`}
       >
-        <div className="card-face card-front">{word.english}</div>
+        <div className="card-face card-front"  onClick={() => playSound() }>{word.english}</div>
         <div className="card-face card-back">
-          <div>{word.russian}</div>
+          <div  onClick={() => playSound() } >{word.russian}</div>
           <div className="button-group">
             <button className="button-complete" onClick={handleLearned}>
               Изучено

@@ -30,14 +30,20 @@ export default function MyCard({ myCards, deleteHandler }) {
 
   };
 
+    const playSound = () => {
+    const audio = new Audio('../../../public/music/ozvuchka/CardSound.mp3');
+    audio.volume = 0.3;
+    audio.play();
+  };
+
   return (
     <div className="card-container" onClick={handleFlip}>
-      <div className={`card ${isFlipped ? 'flipped' : ''} ${isOpened ? 'opened' : ''}`}>
-        <div className="card-face card-front">
+      <div className={`card ${isFlipped ? 'flipped' : ''} ${isOpened ? 'opened' : ''}`}  onClick={() => playSound() }>
+        <div className="card-face card-front" onClick={() => playSound() } >
           {myCards.english}
         </div>
-        <div className="card-face card-back">
-          <div>{myCards.russian}</div>
+        <div className="card-face card-back" onClick={() => playSound() } >
+          <div  onClick={() => playSound() }>{myCards.russian}</div>
           <div className="button-group">
             <button className="button-complete" style={{backgroundColor:"#e37d97da"}} onClick={(e) => {
               e.stopPropagation();

@@ -66,9 +66,9 @@ export default function ThemeCardPage() {
   };
 
   return (
-    <div className='my-cards-page'>
+    <div className="my-cards-page">
       <h1>ВЫБЕРИ КАРТОЧКУ</h1>
-      <div className='card-grid'>
+      <div className="card-grid">
         {isLoading && <h2>Загрузка...</h2>}
         {cards.length === 0 && !isLoading && (
           <h2>
