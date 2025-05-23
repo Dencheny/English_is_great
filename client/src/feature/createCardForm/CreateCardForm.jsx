@@ -46,7 +46,7 @@ export default function CreateCardForm() {
       const { english, russian, themeId } = formData;
 
       // Проверка (можно дополнительно валидировать)
-      if (!english || !russian || !themeId) {
+      if (!english || !russian) {
         alert('Заполните все поля');
         return;
       }
@@ -54,7 +54,7 @@ export default function CreateCardForm() {
       const payload = {
         english,
         russian,
-        themeId, // этот ID нужен для связи с темой
+        themeId:themeId || 1, // этот ID нужен для связи с темой
       };
 
       const res = await WordApi.createWord(payload);
@@ -100,9 +100,12 @@ export default function CreateCardForm() {
         />
         <Box sx={{ minWidth: 120 }}>
           <FormControl fullWidth>
-            <InputLabel variant='standard' htmlFor='theme'></InputLabel>
+            <InputLabel variant='standard' htmlFor='theme'>
+            </InputLabel>
+
             <NativeSelect
               name='themeId'
+              defaultValue={formData.themeId}
               value={formData.themeId}
               onChange={handleChange}
               inputProps={{

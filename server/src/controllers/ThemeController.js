@@ -33,7 +33,7 @@ class ThemeConroller {
         res.status(201).json(formatResponse(201, 'Theme created successfully', newTheme));
       } catch (error) {
         console.error('Ошибка при создании темы:', error);
-        res.status(500).json(formatResponse('Ошибка сервера'));
+        res.status(500).json(formatResponse(500, 'Internal Server Error'));
       }
   }
 }

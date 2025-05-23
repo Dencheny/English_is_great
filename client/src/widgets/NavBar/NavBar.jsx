@@ -8,6 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
+import DesktopMacTwoToneIcon from '@mui/icons-material/DesktopMacTwoTone';
 
 export default function NavBar({ logoutHandler, user }) {
   const navigate = useNavigate();
@@ -27,6 +28,8 @@ export default function NavBar({ logoutHandler, user }) {
     handleClose();
   };
 
+  const logoPath = user.status === 'logged' ? '/theme' : '/signup'
+
   const navbar = {
     background: 'linear-gradient(45deg,#ffcd69, #e0e9ee, #89df8f, #ff7d97)',
     padding: '0.4rem 1rem',
@@ -43,13 +46,14 @@ export default function NavBar({ logoutHandler, user }) {
           {/* Левая часть — логотип */}
           <Box
             sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-            onClick={() => handleNavigate('/login')}
+            onClick={() => handleNavigate(logoPath)}
           >
             <img src="/favicon.png" alt="LOGO" style={{ width: '50px' }} />
           </Box>
 
           {/* Правая часть — имя и бургер */}
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <DesktopMacTwoToneIcon onClick={() => navigate('/chatGPT')} sx={{ marginRight: 4 }}/>
             <Typography sx={{ marginRight: 2 }}>
               {user?.data?.name || 'Гость'}
             </Typography>

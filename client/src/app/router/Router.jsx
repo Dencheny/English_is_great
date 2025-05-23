@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router';
+import { Routes, Route, Navigate } from 'react-router';
 import Layout from '../layout/Layout';
 import ThemeCardPage from '../../pages/themeCard/ThemeCardPage';
 import MyCardPage from '../../pages/myCard/MyCardPage';
@@ -19,8 +19,31 @@ export default function Router({ setUser, logoutHandler, user }) {
   return (
     <Routes>
       <Route element={<Layout logoutHandler={logoutHandler} user={user} />}>
-        <Route path="/login" element={<LoginPage setUser={setUser}/>} /> {/*Работает*/}
-        <Route path="/signup" element={<SignUpPage setUser={setUser} />} />{/*Работает*/}
+      {/*Доп защита для не авторизованного юзера*/}
+        <Route
+          element={
+            <ProtectedRoute
+            isAllowed={user.status !== 'logged'}
+            redirectTo='/theme'
+            />
+          }
+        >
+         <Route path="/login" element={<LoginPage setUser={setUser}/>} /> {/*Работает*/}
+         <Route path="/signup" element={<SignUpPage setUser={setUser} />} />{/*Работает*/}
+        </Route>
+       
+
+{/*Роуты под этой строкой будут защищеныыми!*/}
+
+
+<Route
+element={
+  <ProtectedRoute 
+    isAllowed={user.status === 'logged'}
+    redirectTo='/signup'
+  />
+}>
+
         <Route path="/theme" element={<ThemeNamePage user={user} />} />{/*Работает*/}
         <Route path="/theme/:id" element={<ThemeCardPage user={user} />} />{/*Работает*/}
         <Route path="/progress" element={<ProgressPage user={user} />} />{/*Работает*/}
@@ -28,31 +51,14 @@ export default function Router({ setUser, logoutHandler, user }) {
         <Route path="/createWord" element={<CreateWordPage user={user} />} />{/*Работает*/}
         <Route path="/edditWord/:id" element={<EdditWordPage user={user} />} />{/*Добавил setUser()*/}
         <Route path="/chatGPT" element={<ChatBot user={user} />} />
-      {/* <Route element={<Footer logoutHandler={logoutHandler} user={user} />} /> */}
-        {/* <Route path="/theme_name" element={<CraftAddPage />} /> */}
-        {/* <Route
-          element={
-            <ProtectedRoute
-              isAllowed={user.status !== 'logged'}
-              redirectTo="/crafts"
-            />
-          }
-        >
-          <Route path="/login" element={<LoginPage setUser={setUser} />} />
-        </Route>
-        <Route
-          path="/jane"
-          element={
-            <ProtectedRoute
-              isAllowed={user.status === 'logged' && user.data.name === 'Jane'}
-            >
-              {' '}
-              <h1>Jane's Page</h1>{' '}
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/crafts/:craftId" element={<CraftOnePage />} />
-        <Route path="*" element={<h1>No content</h1>} /> */}
+</Route>
+       
+
+{/*Роут по умолчанию*/}
+        <Route path="*" element={
+          <Navigate to ={user.status === 'logged' ? '/theme' : "/signup"} replace />
+          } 
+          />
       </Route>
     </Routes>
   );

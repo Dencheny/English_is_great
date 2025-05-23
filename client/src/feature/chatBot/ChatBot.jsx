@@ -25,10 +25,10 @@ const ChatBot = () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization:
-              'Bearer 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',
+            'Authorization':
+              `Bearer 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`,
             'HTTP-Referer': 'http://localhost',
-            'X-Title': 'language-assistant',
+            'X-Title': 'chat-bot-test',
           },
           body: JSON.stringify({
             model: 'meta-llama/llama-4-maverick',
@@ -70,7 +70,7 @@ const ChatBot = () => {
               key={idx}
               className={`chat-bubble ${msg.role === 'user' ? 'user' : 'bot'}`}
             >
-              {msg.role === 'bot' ? (
+              {msg.role === 'assistant' ? (
                 <ReactMarkdown>{msg.content}</ReactMarkdown>
               ) : (
                 msg.content
