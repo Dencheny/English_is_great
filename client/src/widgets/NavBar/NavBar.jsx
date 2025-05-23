@@ -28,6 +28,8 @@ export default function NavBar({ logoutHandler, user }) {
     handleClose();
   };
 
+  const logoPath = user.status === 'logged' ? '/theme' : '/signup'
+
   const navbar = {
     background: 'linear-gradient(45deg,#ffcd69, #e0e9ee, #89df8f, #ff7d97)',
     padding: '0.4rem 1rem',
@@ -44,7 +46,7 @@ export default function NavBar({ logoutHandler, user }) {
           {/* Левая часть — логотип */}
           <Box
             sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-            onClick={() => handleNavigate('/login')}
+            onClick={() => handleNavigate(logoPath)}
           >
             <img src="/favicon.png" alt="LOGO" style={{ width: '50px' }} />
           </Box>
