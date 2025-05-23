@@ -18,12 +18,6 @@ export default function CreateCardForm() {
   });
   const [showToast, setShowToast] = useState(false);
 
-  const playSound = () => {
-    const audio = new Audio('../../../public/music/gitpullo.mp3');
-    audio.volume = 0.3
-    audio.play();
-  };
-
   useEffect(() => {
     setIsLoading(true);
     try {
@@ -126,7 +120,7 @@ export default function CreateCardForm() {
             </NativeSelect>
           </FormControl>
         </Box>
-        <button type="submit" onClick={() => playSound()}>
+        <button type="submit">
           Подтвердить
         </button>
       </form>

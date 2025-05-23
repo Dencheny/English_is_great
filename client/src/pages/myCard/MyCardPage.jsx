@@ -44,12 +44,6 @@ export default function MyCardPage() {
     fetchData();
   };
 
-  const playSound = () => {
-    const audio = new Audio('../../../public/music/gitpullo.mp3');
-    audio.volume = 1;
-    audio.play();
-  };
-
   return (
     <div className="my-cards-page">
       <h1>МОИ КАРТОЧКИ</h1>
@@ -65,7 +59,7 @@ export default function MyCardPage() {
           </h2>
         )}
         {myCards.map((el) => (
-          <MyCard key={el.id} myCards={el} deleteHandler={deleteHandler} onClick={() => playSound()} />
+          <MyCard key={el.id} myCards={el} deleteHandler={deleteHandler} />
         ))}
       </div>
     </div>

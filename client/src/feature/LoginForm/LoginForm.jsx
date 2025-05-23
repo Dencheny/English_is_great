@@ -6,17 +6,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginForm({ setUser }) {
-    const playSound = () => {
-      const audio = new Audio('../../../public/music/gitpullo.mp3');
-      audio.volume = 0.3;
-      audio.play();
-    };
-  
-    useEffect(() => {
-      setTimeout(() => {
-        playSound();
-      }, 1);
-    }, [])
+
   const navigate = useNavigate();
 
   const loginHandler = async (e) => {

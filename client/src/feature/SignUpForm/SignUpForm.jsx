@@ -3,21 +3,9 @@ import UserValidate from '../../entities/user/api/UserValidate';
 import UserApi from '../../entities/user/api/UserApi';
 import axiosInstance, { setAccessToken } from '../../shared/lib/axiosInstance';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import './SignUpFrom.css';
 
 function SignUpForm({ setUser }) {
-  const playSound = () => {
-    const audio = new Audio('../../../public/music/gitpullo.mp3');
-    audio.volume = 0.3;
-    audio.play();
-  };
-
-  useEffect(() => {
-    setTimeout(() => {
-      playSound();
-    }, 1);
-  }, [])
 
   const navigate = useNavigate();
 
