@@ -28,8 +28,6 @@ export default function NavBar({ logoutHandler, user }) {
     handleClose();
   };
 
-  const logoPath = user.status === 'logged' ? '/theme' : '/signup'
-
   const navbar = {
     background: 'linear-gradient(45deg,#ffcd69, #e0e9ee, #89df8f, #ff7d97)',
     padding: '0.4rem 1rem',
@@ -41,53 +39,66 @@ export default function NavBar({ logoutHandler, user }) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={navbar}>
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-          
+        <Toolbar
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+          }}
+        >
           {/* Левая часть — логотип */}
           <Box
             sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-            onClick={() => handleNavigate(logoPath)}
+            onClick={() => handleNavigate('/login')}
           >
             <img src="/favicon.png" alt="LOGO" style={{ width: '50px' }} />
           </Box>
 
           {/* Правая часть — имя и бургер */}
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <DesktopMacTwoToneIcon onClick={() => navigate('/chatGPT')} sx={{ marginRight: 4 }}/>
-            <Typography sx={{ marginRight: 2 }}>
+            <Typography sx={{ marginRight: 4 }}>
               {user?.data?.name || 'Гость'}
             </Typography>
-            <IconButton
-              size="large"
-              edge="end"
-              color="inherit"
-              aria-label="menu"
-              onClick={handleMenuClick}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            >
-              <MenuItem onClick={() => handleNavigate('/progress')}>
-                Мой прогресс
-              </MenuItem>
-              <MenuItem onClick={() => handleNavigate('/myWords')}>
-                Мои слова
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  logoutHandler();
-                  handleNavigate('/login');
-                }}
-              >
-                Выйти
-              </MenuItem>
-            </Menu>
+
+            {user.status === 'logged' && (
+              <>
+                <DesktopMacTwoToneIcon
+                  onClick={() => navigate('/chatGPT')}
+                  sx={{ marginRight: 2 }}
+                />
+                <IconButton
+                  size="large"
+                  edge="end"
+                  color="inherit"
+                  aria-label="menu"
+                  onClick={handleMenuClick}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                >
+                  <MenuItem onClick={() => handleNavigate('/progress')}>
+                    Мой прогресс
+                  </MenuItem>
+                  <MenuItem onClick={() => handleNavigate('/myWords')}>
+                    Мои слова
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      logoutHandler();
+                      handleNavigate('/login');
+                    }}
+                  >
+                    Выйти
+                  </MenuItem>
+                </Menu>
+              </>
+            )}
           </Box>
         </Toolbar>
       </AppBar>

@@ -38,13 +38,13 @@ export default function MyCard({ myCards, deleteHandler }) {
         <div className="card-face card-back">
           <div>{myCards.russian}</div>
           <div className="button-group">
-            <button className="button-complete" onClick={(e) => {
+            <button className="button-complete" style={{backgroundColor:"#e37d97da"}} onClick={(e) => {
               e.stopPropagation();
               deleteHandler(myCards.id);
             }}>
               Удалить
             </button>
-            <button className="button-edit" onClick={handleEdit}>
+            <button className="button-complete" onClick={handleEdit}>
               Изменить
             </button>
           </div>

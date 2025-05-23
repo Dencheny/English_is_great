@@ -12,7 +12,7 @@ export default function MyCardPage() {
 
   const [isLoading, setIsLoading] = useState(true);
 
- const fetchCads = useCallback(async () => {
+  const fetchCads = useCallback(async () => {
     setIsLoading(true);
     try {
       WordApi.getAllWordsByUser().then((res) => {
@@ -43,7 +43,6 @@ export default function MyCardPage() {
     };
     fetchData();
   };
-
 
   return (
     <div className="my-cards-page">
