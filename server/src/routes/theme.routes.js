@@ -11,7 +11,7 @@ const themeRouter = express.Router();
 
 
 
-themeRouter.get('/themes',verifyAccessToken, ThemeController.getAllThemesFromDb);
+themeRouter.get('/themes', verifyAccessToken, ThemeController.getAllThemesFromDb);
 themeRouter.post('/themes', ThemeController.addTheme);
 
 

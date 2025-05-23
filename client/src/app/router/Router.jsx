@@ -19,8 +19,19 @@ export default function Router({ setUser, logoutHandler, user }) {
   return (
     <Routes>
       <Route element={<Layout logoutHandler={logoutHandler} user={user} />}>
-        <Route path="/login" element={<LoginPage setUser={setUser}/>} /> {/*Работает*/}
-        <Route path="/signup" element={<SignUpPage setUser={setUser} />} />{/*Работает*/}
+      {/*Доп защита для не авторизованного юзера*/}
+        <Route
+          element={
+            <ProtectedRoute
+            isAllowed={user.status !== 'logged'}
+            redirectTo='/theme'
+            />
+          }
+        >
+         <Route path="/login" element={<LoginPage setUser={setUser}/>} /> {/*Работает*/}
+         <Route path="/signup" element={<SignUpPage setUser={setUser} />} />{/*Работает*/}
+        </Route>
+       
 
 {/*Роуты под этой строкой будут защищеныыми!*/}
 
@@ -44,7 +55,10 @@ element={
        
 
 {/*Роут по умолчанию*/}
-        <Route path="*" element={<Navigate to ="/signup" replace />} />
+        <Route path="*" element={
+          <Navigate to ={user.status === 'logged' ? '/theme' : "/signup"} replace />
+          } 
+          />
       </Route>
     </Routes>
   );
