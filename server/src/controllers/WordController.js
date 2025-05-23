@@ -3,8 +3,6 @@ const formatResponse = require('../utils/formatResponse');
 const WordValidator = require('../utils/wordValidator');
 
 class WordController {
-
-  
   // все слова c бд
   static async getAllWordsFromDb(req, res) {
     try {
@@ -25,6 +23,29 @@ class WordController {
       return res.status(500).json(formatResponse(500, 'Internal Server Error'));
     }
   }
+
+  // слово выбранное для редактирования
+  static async getWordUserBuId(req, res) {
+    try {
+      const { wordId } = req.params;
+      const { user } = res.locals; // из middleware verifyAccessToken
+      if (!user) {
+        return res
+          .status(401)
+          .json(formatResponse(401, 'Unauthorized: User not authenticated'));
+      }
+      const word = await WordService.getWordUserById(wordId, user.id); /// изменить
+      // console.log(word)
+      if (!word) {
+        return res.status(200).json(formatResponse(200, 'No Word found', []));
+      }
+      return res.status(200).json(formatResponse(200, 'Success', word));
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json(formatResponse(500, 'Internal Server Error'));
+    }
+  }
+
   // все созданные юзером слова
   static async getAllWordsBuUser(req, res) {
     try {
@@ -75,8 +96,8 @@ class WordController {
         .json(formatResponse(400, 'Список слов пуст или невалиден'));
     }
     try {
-      const insertedWords = await WordService.addWords(data)
-      res.status(201).json(formatResponse(201, 'Success',insertedWords));
+      const insertedWords = await WordService.addWords(data);
+      res.status(201).json(formatResponse(201, 'Success', insertedWords));
     } catch (error) {
       if (error.message === 'Words already exists') {
         res.status(400).json(formatResponse(400, 'Words already exists'));
@@ -128,7 +149,7 @@ class WordController {
       const authorId = res.locals.user.id;
 
       const { english, russian, themeId } = req.body;
-      console.log('New data:', english, russian, themeId);
+      console.log('New data:', id, english, russian, themeId);
       const { isValid, error } = WordValidator.validate({
         english,
         russian,

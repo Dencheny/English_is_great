@@ -12,6 +12,12 @@ export default class WordApi {
     const response = await axiosInstance.get('/word/myWords');
     return response;
   }
+  
+ // получение данных слова на странице редактирования
+  static async getWordsUserById(id) {
+    const response = await axiosInstance.get(`/word/myWord/${id}`);
+    return response;
+  }
 
   static async getUnlearnedWordsByOneTheme(id) {
     const response = await axiosInstance.get(`/word/theme/${id}`);

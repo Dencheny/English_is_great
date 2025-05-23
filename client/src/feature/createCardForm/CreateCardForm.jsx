@@ -5,6 +5,7 @@ import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import ThemeApi from '../../entities/user/api/themeApi';
 import WordApi from '../../entities/user/api/wordApi';
+import { useParams } from 'react-router';
 // import WordApi from '../../entities/user/api/wordApi';
 
 export default function CreateCardForm() {
@@ -15,6 +16,7 @@ export default function CreateCardForm() {
     russian: '',
     themeId: '', // id выбранной темы
   });
+  const [showToast, setShowToast] = useState(false);
 
   const playSound = () => {
     const audio = new Audio('../../../public/music/gitpullo.mp3');
@@ -26,7 +28,6 @@ export default function CreateCardForm() {
     setIsLoading(true);
     try {
       ThemeApi.getAllThemes().then((res) => {
-        console.log('tesst', res.data.data);
         setThemeNames(res.data.data);
         setIsLoading(false);
       });
@@ -63,8 +64,14 @@ export default function CreateCardForm() {
       };
 
       const res = await WordApi.createWord(payload);
-      console.log(res);
-      console.log('Слово успешно создано:', res.data);
+      if (res.data) {
+        setShowToast(true);
+        setTimeout(() => {
+          setShowToast(false);
+        }, 1000);
+      }
+
+      // console.log('Слово успешно создано:', res.data);
 
       // Очистить форму после создания
       setFormData({ english: '', russian: '', themeId: '' });
@@ -74,7 +81,10 @@ export default function CreateCardForm() {
   };
 
   return (
-    <div className="create-word-page">
+    <div className='create-word-page'>
+      {showToast && (
+        <div className='notification'>Слово успешно добавлено!</div>
+      )}
       <h1>ДОБАВИТЬ СВОЁ СЛОВО</h1>
       <form className="create-word-form" onSubmit={handleSubmit}>
         <input
@@ -95,7 +105,9 @@ export default function CreateCardForm() {
         />
         <Box sx={{ minWidth: 120 }}>
           <FormControl fullWidth>
+
             <InputLabel variant="standard" htmlFor="theme"></InputLabel>
+
             <NativeSelect
               name="themeId"
               defaultValue={formData.themeId}
