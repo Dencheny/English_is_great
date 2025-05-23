@@ -21,10 +21,12 @@ function App() {
   useEffect(() => {
     axiosInstance('/auth/refreshTokens')
       .then((res) => {
+        console.log('App: Logged in, user=', res.data.data.user);//ллоги
         setUser({ status: 'logged', data: res.data.data.user });
         setAccessToken(res.data.data.accessToken);
       })
-      .catch(() => {
+      .catch((err) => {
+         console.log('App: Guest, error=', err); 
         setUser({ status: 'guest', data: null });
         setAccessToken('');
       });
