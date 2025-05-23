@@ -3,10 +3,9 @@ import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
-import ThemeApi from '../../entities/user/api/themeApi';
+import ThemeApi from '../../entities/user/api/ThemeApi';
 import WordApi from '../../entities/user/api/wordApi';
-import { useParams } from 'react-router';
-// import WordApi from '../../entities/user/api/wordApi';
+
 
 export default function CreateCardForm() {
   const [themes, setThemeNames] = useState([]);
@@ -16,7 +15,11 @@ export default function CreateCardForm() {
     russian: '',
     themeId: '', // id выбранной темы
   });
+  // всплывающее окно (зеленое справа)
   const [showToast, setShowToast] = useState(false);
+// Состояние ошибки валдиции(для отображение красного и зеленого уведомления)
+const [errors, setErrors] = useState({ english: '', russian: '', themeId: '', general: '' })
+
 
   const playSound = () => {
     const audio = new Audio('../../../public/music/gitpullo.mp3');
@@ -43,12 +46,13 @@ export default function CreateCardForm() {
       ...prev,
       [name]: value,
     }));
+    // Добавление: Сбрасываем ошибку при изменении поля
+    setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
       const { english, russian, themeId } = formData;
 
       // Проверка (можно дополнительно валидировать)
@@ -57,6 +61,42 @@ export default function CreateCardForm() {
         return;
       }
 
+          // Добавление: Валидация полей
+    let newErrors = { english: '', russian: '', themeId: '', general: '' };
+    let isValid = true;
+
+    // Проверка english: латинские буквы, пробелы, дефисы, апострофы
+    if (!english) {
+      newErrors.english = 'English word is required';
+      isValid = false;
+    } else if (!/^[a-zA-Z\s'-]+$/.test(english)) {
+      newErrors.english =
+        'Введите слово на латинице';
+      isValid = false;
+    }
+
+    // Проверка russian: кириллица, пробелы, дефисы
+    if (!russian) {
+      newErrors.russian = 'Russian word is required';
+      isValid = false;
+    } else if (!/^[а-яА-ЯёЁ\s-]+$/u.test(russian)) {
+      newErrors.russian =
+        'Ведите слово на кириллице';
+      isValid = false;
+    }
+
+    // // Проверка themeId: должно быть выбрано и существовать
+    // if (!themeId || !themes.some((theme) => theme.id === Number(themeId))) {
+    //   newErrors.themeId = 'Please select a valid theme';
+    //   isValid = false;
+    // }
+
+    setErrors(newErrors);
+
+    if (!isValid) {
+      return;
+    }
+try {
       const payload = {
         english,
         russian,
@@ -75,8 +115,11 @@ export default function CreateCardForm() {
 
       // Очистить форму после создания
       setFormData({ english: '', russian: '', themeId: '' });
+      setErrors({ english: '', russian: '', themeId: '', general: '' });
     } catch (error) {
       console.error(error);
+      // ошибка срвак 
+       setErrors({ ...newErrors, general: 'Failed to create word' });
     }
   };
 
@@ -84,25 +127,46 @@ export default function CreateCardForm() {
     <div className='create-word-page'>
       {showToast && (
         <div className='notification'>Слово успешно добавлено!</div>
+
       )}
+   
       <h1>ДОБАВИТЬ СВОЁ СЛОВО</h1>
       <form className="create-word-form" onSubmit={handleSubmit}>
-        <input
-          name="english"
-          type="text"
-          placeholder="Слово на Английском"
-          value={formData.english}
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="russian"
-          type="text"
-          placeholder="Слово на Русском"
-          value={formData.russian}
-          onChange={handleChange}
-          required
-        />
+      {/* Поле english */}
+        <div style={{ marginBottom: '1rem' }}>
+          <input
+            name="english"
+            type="text"
+            placeholder="Слово на Английском"
+            value={formData.english}
+            onChange={handleChange}
+            required
+            style={{ borderColor: errors.english ? 'red' : '' }}
+          />
+          {/* Добавление: Ошибка под полем */}
+          {errors.english && (
+            <p style={{ color: 'red', fontSize: '0.8rem' }}>{errors.english}</p>
+          )}
+        </div>
+
+        {/* Поле russian */}
+        <div style={{ marginBottom: '1rem' }}>
+          <input
+            name="russian"
+            type="text"
+            placeholder="Слово на Русском"
+            value={formData.russian}
+            onChange={handleChange}
+            required
+            style={{ borderColor: errors.russian ? 'red' : '' }}
+          />
+          {/* Добавление: Ошибка под полем */}
+          {errors.russian && (
+            <p style={{ color: 'red', fontSize: '0.8rem' }}>{errors.russian}</p>
+          )}
+        </div>
+
+
         <Box sx={{ minWidth: 120 }}>
           <FormControl fullWidth>
 
@@ -126,7 +190,7 @@ export default function CreateCardForm() {
             </NativeSelect>
           </FormControl>
         </Box>
-        <button type="submit" onClick={() => playSound()}>
+        <button type="submit">
           Подтвердить
         </button>
       </form>
