@@ -3,6 +3,8 @@ const formatResponse = require('../utils/formatResponse');
 const WordValidator = require('../utils/wordValidator');
 
 class WordController {
+
+  
   // все слова c бд
   static async getAllWordsFromDb(req, res) {
     try {
@@ -63,6 +65,25 @@ class WordController {
     } catch (error) {
       console.error(error);
       res.status(500).json(formatResponse(500, 'Internal Server Error'));
+    }
+  }
+  static async createMoreData(req, res) {
+    const data = req.body;
+    if (!Array.isArray(data) || data.length === 0) {
+      return res
+        .status(400)
+        .json(formatResponse(400, 'Список слов пуст или невалиден'));
+    }
+    try {
+      const insertedWords = await WordService.addWords(data)
+      res.status(201).json(formatResponse(201, 'Success',insertedWords));
+    } catch (error) {
+      if (error.message === 'Words already exists') {
+        res.status(400).json(formatResponse(400, 'Words already exists'));
+      } else {
+        console.error(error);
+        res.status(500).json(formatResponse(500, 'Internal Server Error'));
+      }
     }
   }
 
@@ -140,7 +161,6 @@ class WordController {
       // const { id } = req.params; для логики с параметризированным запросом
 
       const { id } = req.body; // актуальный вариант!
-      console.log('проверкаэ', req.body, id, res.locals.user.id);
       const authorId = res.locals.user.id; // тоже для доп защиты, прописывал ранеее
 
       // const authorId = 1; роу запрос

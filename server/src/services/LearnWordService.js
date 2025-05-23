@@ -2,6 +2,14 @@ const { LearnWord } = require('../../db/models');
 // const { Word, Theme } = require('../../db/models'); для прогрес бара
 
 class LearnWordService {
+// получить все изученные юзером слова конкретной темы для прогресса 
+  static async markAllLearnedByTheme(userId, themeId) {
+    const learnWordArr = await LearnWord.findAll({
+      where: { userId, themeId },
+    });
+    return learnWordArr;
+  }
+
   // получить все изученные слова
   static async markAllLearned(userId) {
     const learnWordArr = await LearnWord.findAll({
@@ -10,13 +18,6 @@ class LearnWordService {
     return learnWordArr;
   }
 
-  // получить все изученные юзером слова конкретной темы для прогресса
-  static async markAllLearnedByTheme(userId, themeId) {
-    const learnWordArr = await LearnWord.findAll({
-      where: { userId, themeId },
-    });
-    return learnWordArr;
-  }
 
   // Пометить карточку как изученную - создаем запись в таблице об изученном слове
   static async createLearnWordByDb({ userId, wordId, themeId }) {
@@ -75,3 +76,39 @@ class LearnWordService {
 }
 
 module.exports = LearnWordService;
+
+// второй вариант с reqbody
+// class LearnWordService {
+//   static async getAllLearnedWordsByUser(userId) {
+//     try {
+//       console.log('Fetching learned words for userId:', userId);
+//       const learnedWords = await LearnWord.findAll({
+//         where: { userId },
+//       });
+//       console.log('Fetched learned words:', learnedWords);
+//       return learnedWords;
+//     } catch (err) {
+//       console.error('Error fetching learned words:', err);
+//       throw err;
+//     }
+//   }
+
+//   static async createLearnWordByDb({ wordId, userId, themeId }) {
+//     try {
+//       console.log('Creating learnWord:', { wordId, userId, themeId });
+//       const [record, created] = await LearnWord.findOrCreate({
+//         where: { wordId, userId, themeId },
+//         defaults: { wordId, userId, themeId },
+//       });
+//       console.log('LearnWord result:', { record, created });
+//       return { record, created };
+//     } catch (err) {
+//       console.error('Error creating learnWord:', err);
+//       throw err;
+//     }
+//   }
+
+//   // Удален markAllLearnedByTheme, если не используется
+// }
+
+// module.exports = LearnWordService;

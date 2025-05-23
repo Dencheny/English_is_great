@@ -1,91 +1,84 @@
-.card-container {
-  perspective: 1000px;
-  width: 250px;
-  height: 160px;
-  margin: 1rem auto;
-  position: relative;
-}
-
-.card {
-  width: 100%;
-  height: 100%;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-  position: relative;
-  cursor: pointer;
-}
-
-.card.flipped {
-  transform: rotateY(180deg);
-}
-
-.card-face {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.chat-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
-  font-size: 1.4rem;
-  font-weight: bold;
-  transition: background-color 0.3s;
+  min-height: 83vh;
+  background: linear-gradient(135deg, #f9fcff, #ecf3fa);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.card-front {
-  background-color: #e0f0ff; /* синеватый */
+.chat-box {
+  background: linear-gradient(45deg, #ff7d97, #ffcd69, #e0e9ee, #89df8f);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  width: 100%;
 }
 
-.card.opened .card-front {
-  background-color: #fff7b3; /* желтоватый если уже открыта */
+.chat-title {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 16px;
 }
 
-.card-back {
-  background-color: #fff7b3;
-  transform: rotateY(180deg);
+.chat-messages {
+  height: 400px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  background: #fafafa;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  gap: 10px;
 }
 
-.button-complete {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s;
+.chat-bubble {
+  padding: 10px 14px;
+  border-radius: 10px;
+  max-width: 75%;
+  line-height: 1.4;
 }
 
-.button-complete:hover {
-  background-color: #45a049;
+.chat-bubble.user {
+  background-color: #d9eaff;
+  align-self: flex-end;
+  color: #004085;
 }
 
-.button-group {
+.chat-bubble.bot {
+  background-color: #eee;
+  align-self: flex-start;
+  color: #333;
+}
+
+.chat-input-row {
   display: flex;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 14px;
 }
 
-.button-edit {
-  padding: 0.5rem 1rem;
-  background-color: #2196f3;
-  color: white;
+.chat-input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.chat-button {
+  padding: 10px 20px;
+  background-color: #ff7d97cc;
   border: none;
-  border-radius: 6px;
+  color: white;
+  border-radius: 8px;
+  font-size: 16px;
   cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s;
+  transition: background 0.3s;
+  color: #333;
 }
 
-.button-edit:hover {
-  background-color: #1976d2;
+.chat-button:hover {
+  background-color: #a5f3a1;
 }

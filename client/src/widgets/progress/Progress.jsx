@@ -4,8 +4,13 @@ import { useState } from 'react';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
 export default function Progress({ theme, user }) {
-  const targetProgress = Math.floor(1 * 70);
-  const [progress, setProgress] = useState(0);
+console.log('Progress component data:', { theme, userId: user?.data?.id });
+
+
+// статичекий прогрес для примера!
+ const [progress, setProgress] = useState(0);
+  const targetProgress = parseFloat(theme.progress);
+ 
 
   // const obj = {
   //   now: 10,
@@ -45,8 +50,9 @@ export default function Progress({ theme, user }) {
           now={progress}
           label=""
         />
-        <div className="progress-label-centered">{progress}%</div>
+        <div className="progress-label-centered">{theme.progress}%</div>
       </div>
     </div>
   );
 }
+// progress заменил theme.progress

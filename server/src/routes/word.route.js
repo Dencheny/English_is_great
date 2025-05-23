@@ -26,4 +26,6 @@ wordRouter.patch("/edditWord/:id",verifyAccessToken, validateId, WordController.
 // работает тоже! Не отклоняясь от логики excalidraw
 wordRouter.delete("/myWord", verifyAccessToken, WordController.deleteOneWord);
 
+wordRouter.post('/createWords', verifyAccessToken, WordController.createMoreData)
+
 module.exports = wordRouter;
