@@ -11,7 +11,7 @@
     "dbMigUndo": "npx sequelize db:migrate:undo:all",
     "dbSeed": "npx sequelize db:seed:all",
     "dbSeedUndo": "npx sequelize db:seed:undo:all",
-    "dbInit": "npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all"
+    "dbInit": "npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +20,8 @@
   "devDependencies": {
     "@eslint/js": "^9.27.0",
     "eslint": "^9.27.0",
-    "globals": "^16.1.0"
+    "globals": "^16.1.0",
+    "tailwindcss": "^4.1.7"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

@@ -10,7 +10,7 @@ class LearnWordController {
       const { user } = res.locals;
       console.log('LearnWordController.getLearnWords: res.locals.user:', user);
       if (!user) {
-        console.log('LearnWordController.getLearnWords: No user in res.locals');
+console.log('LearnWordController.getLearnWords: No user in res.locals');
         return res.status(401).json(formatResponse(401, 'Unauthorized: User not authenticated'));
       }
       const userId = user.id;
@@ -19,6 +19,12 @@ class LearnWordController {
       console.log('LearnWordController.getLearnWords: learnWords:', learnWords);
       if (learnWords.length === 0) {
         return res.status(200).json(formatResponse(200, 'No learnWord found', []));
+      }
+      return res.status(200).json(formatResponse(200, 'Success', learnWords));
+    } catch (err) {
+      console.error('LearnWordController.getLearnWords error:', err.stack);
+      return res.status(500).json(formatResponse(500, 'Internal Server Error'));
+    }
       }
       return res.status(200).json(formatResponse(200, 'Success', learnWords));
     } catch (err) {
@@ -54,22 +60,33 @@ class LearnWordController {
 
   // запись в бд изученного слова
   static async createLearnWord(req, res) {
-    const { themeId } = req.params;
-    // console.log('themeId', typeof themeId)
-    const { wordId } = req.body;
-    // console.log('wordId', typeof wordId)
+    // const { themeId } = req.params;
+    // console.log('themeId', typeof themeId, themeId)
+    const { id , themeId} = req.body;
+    const wordId = id;
+
     const userId = res.locals.user.id;
     // const userId = 12
     // console.log('userId', typeof userId)
+
     // const { user } = res.locals; // из middleware verifyAccessToken
     // if (!user) {
     //   return res.status(401).json(formatResponse(401, 'Unauthorized: User not authenticated'));
     // }
+
+    const { user } = res.locals; // из middleware verifyAccessToken
+    if (!user) {
+      return res
+        .status(401)
+        .json(formatResponse(401, 'Unauthorized: User not authenticated'));
+    }
+
     const { isValid, error } = LearnWordValidator.validate({
       wordId,
       userId,
       themeId,
     });
+
     if (!isValid) {
       return res
         .status(400)
@@ -81,10 +98,11 @@ class LearnWordController {
         userId,
         themeId,
       });
-      if (created) {
+      
+      if (!created) {
         return res
-          .status(200)
-          .json(formatResponse(200, "already exist learnWord", record));
+          .status(200).json(formatResponse(200, 'already exist learnWord', record));
+
       }
       return res.status(201).json(formatResponse(201, "Success", record));
     } catch (error) {
@@ -99,8 +117,8 @@ class LearnWordController {
       const { user } = res.locals; // из middleware verifyAccessToken
       if (!user) {
         return res
-          .status(401)
-          .json(formatResponse(401, "Unauthorized: User not authenticated"));
+          .status(401).json(formatResponse(401, 'Unauthorized: User not authenticated'));
+
       }
       const  userId  = user.id
       const learnWords = await LearnWordService.markAllLearned(userId); /// изменить
@@ -118,6 +136,7 @@ class LearnWordController {
 }
 
 module.exports = LearnWordController;
+
 
 // Вариант без req.body
 // class LearnWordController {
@@ -186,3 +205,5 @@ module.exports = LearnWordController;
 // }
 
 // module.exports = LearnWordController;
+
+

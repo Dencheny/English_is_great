@@ -10,7 +10,6 @@ class LearnWordService {
     return learnWordArr;
   }
 
-
   // получить все изученные слова
   static async markAllLearned(userId) {
     const learnWordArr = await LearnWord.findAll({
@@ -22,12 +21,12 @@ class LearnWordService {
   
 
   // Пометить карточку как изученную - создаем запись в таблице об изученном слове
-  static async createLearnWordByDb({userId, wordId, themeId}) {
-    console.log('services data',userId, wordId, themeId)
+  static async createLearnWordByDb({ userId, wordId, themeId }) {
+    // console.log('services data', userId, wordId, themeId);
     const [record, created] = await LearnWord.findOrCreate({
       where: { userId, wordId, themeId },
     });
-    
+
     return { record, created };
   }
 

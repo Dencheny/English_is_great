@@ -61,8 +61,6 @@ function SignUpForm({ setUser }) {
   // один раз отработал useEffect и остановился?
 
 
-
-
   return (
 
     <div className="signup-container">
