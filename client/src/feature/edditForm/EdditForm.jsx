@@ -19,6 +19,8 @@ export default function EdditForm() {
   const [showToast, setShowToast] = useState(false);
   const params = useParams();
 
+const [errors, setErrors] = useState({ english: '', russian: '', themeId: '', general: '' })
+
   useEffect(() => {
     setIsLoading(true);
     try {
@@ -44,12 +46,13 @@ export default function EdditForm() {
       ...prev,
       [name]: value,
     }));
+    setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // setIsLoading(true);
-    try {
+    
       const { english, russian, themeId } = formData;
 
       // Проверка (можно дополнительно валидировать)
@@ -58,6 +61,43 @@ export default function EdditForm() {
         return;
       }
 
+          // Добавление: Валидация полей
+    let newErrors = { english: '', russian: '', themeId: '', general: '' };
+    let isValid = true;
+
+    // Проверка english: латинские буквы, пробелы, дефисы, апострофы
+    if (!english) {
+      newErrors.english = 'English word is required';
+      isValid = false;
+    } else if (!/^[a-zA-Z\s'-]+$/.test(english)) {
+      newErrors.english =
+        'Введите слово на латинице';
+      isValid = false;
+    }
+
+    // Проверка russian: кириллица, пробелы, дефисы
+    if (!russian) {
+      newErrors.russian = 'Russian word is required';
+      isValid = false;
+    } else if (!/^[а-яА-ЯёЁ\s-]+$/u.test(russian)) {
+      newErrors.russian =
+        'Ведите слово на кириллице';
+      isValid = false;
+    }
+
+    // // Проверка themeId: должно быть выбрано и существовать
+    // if (!themeId || !themes.some((theme) => theme.id === Number(themeId))) {
+    //   newErrors.themeId = 'Please select a valid theme';
+    //   isValid = false;
+    // }
+
+    setErrors(newErrors);
+
+    if (!isValid) {
+      return;
+    }
+
+try {
       const payload = {
         english,
         russian,
@@ -76,9 +116,12 @@ export default function EdditForm() {
 
       // Очистить форму после создания
       setFormData({ english: '', russian: '', themeId: '' });
+       setErrors({ english: '', russian: '', themeId: '', general: '' })
     } catch (error) {
       console.error(error);
       // setIsLoading(false);
+      // ошибка срвак 
+       setErrors({ ...newErrors, general: 'Failed to create word' });
     }
   };
 
@@ -86,24 +129,44 @@ export default function EdditForm() {
     <>
       <div className='edit-word-page'>
         {showToast && <div className='notification'>Слово успешно изменено!</div>}
+
+
+
         <h1>РЕДАКТИРОВАНИЕ КАРТОЧКИ</h1>
         <form className='edit-word-form' onSubmit={handleSubmit}>
+       {/* Поле english */}
+        <div style={{ marginBottom: '1rem' }}>
           <input
-            name='english'
-            type='text'
-            placeholder='Слово на Английском'
+            name="english"
+            type="text"
+            placeholder="Слово на Английском"
             value={formData.english}
             onChange={handleChange}
             required
+            style={{ borderColor: errors.english ? 'red' : '' }}
           />
+          {/* Добавление: Ошибка под полем */}
+          {errors.english && (
+            <p style={{ color: 'red', fontSize: '0.8rem' }}>{errors.english}</p>
+          )}
+        </div>
+
+        {/* Поле russian */}
+        <div style={{ marginBottom: '1rem' }}>
           <input
-            name='russian'
-            type='text'
-            placeholder='Слово на Русском'
+            name="russian"
+            type="text"
+            placeholder="Слово на Русском"
             value={formData.russian}
             onChange={handleChange}
             required
+            style={{ borderColor: errors.russian ? 'red' : '' }}
           />
+          {/* Добавление: Ошибка под полем */}
+          {errors.russian && (
+            <p style={{ color: 'red', fontSize: '0.8rem' }}>{errors.russian}</p>
+          )}
+        </div>
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
               <InputLabel variant='standard' htmlFor='theme'>
