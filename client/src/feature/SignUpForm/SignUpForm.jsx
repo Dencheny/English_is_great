@@ -1,4 +1,3 @@
-
 import React from "react";
 import UserValidate from "../../entities/user/api/UserValidate";
 import UserApi from "../../entities/user/api/UserApi";
@@ -61,7 +60,9 @@ function SignUpForm({ setUser }) {
   // }, []) // прокидываем пустой массив зависимостей, чтобы не было вечной отрисовки
   // один раз отработал useEffect и остановился?
 
+
   return (
+
     <div className="signup-container">
       <h1 className="signup-title">АНГЛИЙСКИЙ — ЛЕГКО</h1>
       <div className="signup-box">
