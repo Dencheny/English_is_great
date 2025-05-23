@@ -1,51 +1,49 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import MyCard from '../../widgets/myCard/MyCard';
 import { useEffect, useState } from 'react';
 // import WordApi from "../../entities/word/api/WordApi";
 import { useNavigate } from 'react-router-dom';
 import './MyCardPage.css';
+import WordApi from '../../entities/user/api/wordApi';
 
 export default function MyCardPage() {
-  const [myCards, setMyCards] = useState([
-    { id: 1, word: 'Hello', translation: 'Привет' },
-    { id: 2, word: 'Goodbye', translation: 'До свидания' },
-    { id: 3, word: 'Please', translation: 'Пожалуйста' },
-    { id: 4, word: 'Thank you', translation: 'Спасибо' },
-    { id: 5, word: 'Yes', translation: 'Да' },
-    { id: 6, word: 'No', translation: 'Нет' },
-    { id: 7, word: 'Excuse me', translation: 'Извините' },
-    { id: 8, word: 'Sorry', translation: 'Извините' },
-    { id: 9, word: 'How are you?', translation: 'Как дела?' },
-    { id: 10, word: 'I am fine', translation: 'Я в порядке' },
-  ]);
+  const [myCards, setMyCards] = useState([]);
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+ const fetchCads = useCallback(async () => {
     setIsLoading(true);
-    // try {
-    // WordApi.getAllTheme().then((res) => {
-    //   setMyCards(res.data.data);
-    //   setIsLoading(false);
-    // });
-    // } catch (error) {
-    // console.log(error);
-    setIsLoading(false);
-    // }
+    try {
+      WordApi.getAllWordsByUser().then((res) => {
+        setMyCards(res.data.data);
+        setIsLoading(false);
+      });
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
   }, []);
 
+  useEffect(() => {
+    fetchCads();
+  }, [fetchCads]);
+
   const deleteHandler = async (id) => {
-    // try {
-    // const res = await WordApi.deleteCraft(id);
-    // if (res.status === 204) {
-    // setMyCards((prev) => prev.filter((el) => el.id !== id));
-    // }
-    // } catch (error) {
-    // console.log(error);
-    // alert('Что-то пошло не так');
-    // }
+    const fetchData = async () => {
+      try {
+        // console.log('id', id, 'data', word)
+        // console.log(id)
+        await WordApi.deleteWord(id);
+        fetchCads();
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+      }
+    };
+    fetchData();
   };
+
 
   return (
     <div className="my-cards-page">

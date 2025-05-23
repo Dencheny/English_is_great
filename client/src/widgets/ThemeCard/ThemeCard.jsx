@@ -3,7 +3,7 @@ import './ThemeCard.css';
 
 export default function ThemeCard({ word, deleteHandler }) {
 
-  
+
   const [isFlipped, setIsFlipped] = useState(false);
   const [isOpened, setIsOpened] = useState(() => {
     const saved = localStorage.getItem('openedCardsword');
@@ -29,12 +29,6 @@ export default function ThemeCard({ word, deleteHandler }) {
   };
 
   const handleLearned = (e) => {
-    e.stopPropagation();
-    const saved = localStorage.getItem('learnedCardsword');
-    const learnedIds = saved ? JSON.parse(saved) : [];
-    const updated = [...learnedIds, word.id];
-    localStorage.setItem('learnedCardsword', JSON.stringify(updated));
-    setIsLearned(true);
     deleteHandler(word.id, word);
   };
 
