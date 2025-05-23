@@ -14,6 +14,14 @@ class WordService {
     return wordsArr;
   }
 
+  static async getWordUserById(id, authorId) {
+    authorId = Number(authorId);
+    // console.log(authorId, id);
+    const wordsArr = await Word.findOne({ where: { id, authorId } });
+    // console.log('test', wordsArr);
+    return wordsArr;
+  }
+
   // метод на вытягивание всех неизученных слов по выбранной теме, для фронта
   static async getUnlearnedWordsByTheme(themeId, userId) {
     return Word.findAll({

@@ -13,11 +13,14 @@ wordRouter.get("/myWords",verifyAccessToken, WordController.getAllWordsBuUser);
 // все не изученные слова юзера  - конкретной темы (работает!!! с роу запросом)
 wordRouter.get("/theme/:themeId",verifyAccessToken, validateId, WordController.getUnlearnedWordsByOneTheme);
 
+// данные одного слова - запрос уходит при переходе на форму редактирования слова
+wordRouter.get("/myWord/:wordId", verifyAccessToken, WordController.getWordUserBuId);
+
 // создание нового слова или ошибка Word already exists (работает с роу запросом)
 wordRouter.post("/createWord", verifyAccessToken, WordController.createOrFindWord);
 
 //  редактирование (работает)
-wordRouter.patch("/edditWord/:id",verifyAccessToken, validateId, WordController.updateWord);
+wordRouter.patch("/edditWord/:id",verifyAccessToken, WordController.updateWord);
 // удаление
 // (работает с параметизированным запросом)
 // wordRouter.delete("/edditWord/:id", validateId, WordController.deleteOneWord);
