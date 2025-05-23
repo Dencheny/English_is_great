@@ -3,6 +3,8 @@ const formatResponse = require('../utils/formatResponse');
 const WordValidator = require('../utils/wordValidator')
 
 class WordController {
+
+  
   // все слова c бд
   static async getAllWordsFromDb(req, res) {
     

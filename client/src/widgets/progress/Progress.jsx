@@ -8,8 +8,9 @@ console.log('Progress component data:', { theme, userId: user?.data?.id });
 
 
 // статичекий прогрес для примера!
-  // const targetProgress = Math.floor(1 * 70);
-  // const [progress, setProgress] = useState(0);
+ const [progress, setProgress] = useState(0);
+  const targetProgress = parseFloat(theme.progress);
+ 
 
   // const obj = {
   //   now: 10,
@@ -17,18 +18,18 @@ console.log('Progress component data:', { theme, userId: user?.data?.id });
   //   now2: 90,
   // }
 
-  // useEffect(() => {
-  //   let current = 0;
-  //   const interval = setInterval(() => {
-  //     current += 1;
-  //     if (current >= targetProgress) {
-  //       current = targetProgress;
-  //       clearInterval(interval);
-  //     }
-  //     setProgress(current);
-  //   }, 10); // скорость анимации
-  //   return () => clearInterval(interval);
-  // }, [targetProgress]);
+  useEffect(() => {
+    let current = 0;
+    const interval = setInterval(() => {
+      current += 1;
+      if (current >= targetProgress) {
+        current = targetProgress;
+        clearInterval(interval);
+      }
+      setProgress(current);
+    }, 10); // скорость анимации
+    return () => clearInterval(interval);
+  }, [targetProgress]);
 
   return (
     <div className="progress-container">
@@ -46,7 +47,7 @@ console.log('Progress component data:', { theme, userId: user?.data?.id });
             color: 'black',
           }}
           className="my-salad-progress"
-          now={parseFloat(theme.progress)}
+          now={progress}
           label=""
         />
         <div className="progress-label-centered">{theme.progress}%</div>
