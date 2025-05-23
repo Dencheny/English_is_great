@@ -39,7 +39,7 @@ export default function Router({ setUser, logoutHandler, user }) {
 element={
   <ProtectedRoute 
     isAllowed={user.status === 'logged'}
-    redirectTo='/signup'
+    redirectTo='/login'
   />
 }>
 
@@ -55,7 +55,7 @@ element={
 
 {/*Роут по умолчанию*/}
         <Route path="*" element={
-          <Navigate to ={user.status === 'logged' ? '/theme' : "/signup"} replace />
+          <Navigate to ={user.status === 'logged' ? '/theme' : "/login"} replace />
           } 
           />
       </Route>
