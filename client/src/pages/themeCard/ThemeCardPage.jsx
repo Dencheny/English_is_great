@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useEffect, useState } from 'react';
 // import WordApi from "../../entities/word/api/WordApi";
 import { useNavigate, useParams } from 'react-router-dom';
@@ -8,7 +8,6 @@ import WordApi from '../../entities/user/api/wordApi';
 import LearnWordApi from '../../entities/user/api/LearnWord';
 
 export default function ThemeCardPage() {
-  
   const [cards, setCards] = useState([]);
   const params = useParams();
 
@@ -34,7 +33,7 @@ export default function ThemeCardPage() {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchCads = useCallback(async () => {
     setIsLoading(true);
     if (!params?.id) return;
     try {
@@ -46,30 +45,24 @@ export default function ThemeCardPage() {
       console.log(error);
       setIsLoading(false);
     }
-  }, [params]);
+  }, [params?.id]);
+
+  useEffect(() => {
+    fetchCads();
+  }, [fetchCads]);
 
   const deleteHandler = async (id, word) => {
     const fetchData = async () => {
       try {
         // console.log('id', id, 'data', word)
-        const learnWord = await LearnWordApi.createLearnWord(id, word);
-        console.log('данные', learnWord);
+        await LearnWordApi.createLearnWord(id, word);
+        fetchCads();
       } catch (error) {
         console.log(error);
         setIsLoading(false);
       }
-      
     };
-    fetchData()
-    // try {
-    // const res = await WordApi.deleteCraft(id);
-    // if (res.status === 204) {
-    // setMyCards((prev) => prev.filter((el) => el.id !== id));
-    // }
-    // } catch (error) {
-    // console.log(error);
-    // alert('Что-то пошло не так');
-    // }
+    fetchData();
   };
 
   return (
@@ -86,7 +79,12 @@ export default function ThemeCardPage() {
           </h2>
         )}
         {cards.map((el) => (
-          <ThemeCard key={el.id} word={el} deleteHandler={deleteHandler} />
+          <ThemeCard
+            key={el.id}
+            word={el}
+            deleteHandler={deleteHandler}
+            setCards={setCards}
+          />
         ))}
       </div>
     </div>

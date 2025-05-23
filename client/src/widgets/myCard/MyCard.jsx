@@ -33,10 +33,10 @@ export default function MyCard({ myCards, deleteHandler }) {
     <div className="card-container" onClick={handleFlip}>
       <div className={`card ${isFlipped ? 'flipped' : ''} ${isOpened ? 'opened' : ''}`}>
         <div className="card-face card-front">
-          {myCards.word}
+          {myCards.english}
         </div>
         <div className="card-face card-back">
-          <div>{myCards.translation}</div>
+          <div>{myCards.russian}</div>
           <div className="button-group">
             <button className="button-complete" onClick={(e) => {
               e.stopPropagation();

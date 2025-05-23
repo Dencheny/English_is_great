@@ -91,14 +91,17 @@ class WordController {
   static async createOrFindWord(req, res) {
     try {
       const { english, russian, themeId } = req.body;
+      console.log(req.body);
       // const authorId = null // для проверки в постман
       const authorId = res.locals.user.id;
       // Предполагаем, что userId берётся из middleware авторизации
       // берется не из req.body, а из рес локалс для безопасности, потому что юзер может
       // прокинуть совершенно другой authorId , например другого пользователя.
+      console.log({ english, russian, themeId, authorId });
       if (!authorId) {
         return res.status(404).json(formatResponse(404, 'AuthorId undefined'));
       }
+
       const word = await WordService.addWord({
         english,
         russian,

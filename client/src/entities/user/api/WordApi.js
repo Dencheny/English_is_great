@@ -31,9 +31,12 @@ export default class WordApi {
     return response;
   }
 
-  static async deleteWord(data) {
+  static async deleteWord(id) {
     // передать id слова которое надо удалить в data
-    const response = await axiosInstance.delete(`/word//myWord`, data);
+    console.log(id)
+    const response = await axiosInstance.delete(`/word/myWord`, {
+  data: { id }
+});
     return response;
   }
 }

@@ -24,7 +24,7 @@ wordRouter.patch("/edditWord/:id",verifyAccessToken, validateId, WordController.
 
 // удаление через логику рек бади на клиенте
 // работает тоже! Не отклоняясь от логики excalidraw
-wordRouter.delete("/myWord", WordController.deleteOneWord);
+wordRouter.delete("/myWord", verifyAccessToken, WordController.deleteOneWord);
 
 wordRouter.post('/createWords', verifyAccessToken, WordController.createMoreData)
 
