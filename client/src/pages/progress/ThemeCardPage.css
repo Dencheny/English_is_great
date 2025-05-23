@@ -1,0 +1,75 @@
+.progress-page {
+  padding: 3rem;
+  text-align: center;
+}
+
+.progress-page h1 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #333;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: bold;
+  color:  #515b61;
+}
+
+.card-grids {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  border: 3px solid #e0e9ee ;
+  border-radius: 15px;
+}
+
+.progress-container {
+  border: 2px solid #ffcd69;
+  border-radius: 15px;
+  padding: 1.5rem;
+  background: linear-gradient(45deg, #ffcd69d7, #cee4f0, #ff7d97cc);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  width: 80%;
+  /* margin-left: 100px; */
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+}
+
+.progress-container:hover {
+  transform: scale(1.02);
+}
+
+.progress-container h2 {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  color: #444;
+}
+
+.progress-line {
+  display: flex;
+  justify-content: center;
+}
+
+.my-salad-progress .progress-bar {
+  background-color: #a5f3a1 !important; /* светло-салатовый */
+  color: #000;
+  font-weight: bold;
+}
+
+.progress-wrapper {
+  position: relative;
+  width: 70%;
+  margin: 20px auto;
+  display: flex;
+}
+
+.progress-label-centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  color: #333; /* цвет текста */
+  pointer-events: none; /* чтобы мышь не ловила */
+}
+
