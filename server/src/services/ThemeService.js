@@ -1,4 +1,5 @@
 const { Theme, Word, LearnWord } = require('../../db/models');
+const { validate } = require('../utils/wordValidator');
 
 class ThemeService {
   static getAllThemes() {
@@ -29,6 +30,10 @@ class ThemeService {
 
   static async addTheme(themeName) {
     return Theme.create({ themeName });
+  }
+
+  static async addAllThemes(data) {
+    return await Theme.bulkCreate(data, { validate: true });
   }
 }
 

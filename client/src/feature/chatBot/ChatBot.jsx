@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
-const ChatBot = () => {
+const ChatBot = ({ setUser, user }) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
 
@@ -25,7 +25,7 @@ const ChatBot = () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer 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`,
+            Authorization: `Bearer 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`,
             'HTTP-Referer': 'http://localhost',
             'X-Title': 'chat-bot-test',
           },
@@ -64,18 +64,27 @@ const ChatBot = () => {
         <h1 className="chat-title">Чат по изучению языков</h1>
 
         <div className="chat-messages" id="messages">
-          {messages.map((msg, idx) => (
-            <div
-              key={idx}
-              className={`chat-bubble ${msg.role === 'user' ? 'user' : 'bot'}`}
-            >
-              {msg.role === 'assistant' ? (
-                <ReactMarkdown>{msg.content}</ReactMarkdown>
-              ) : (
-                msg.content
-              )}
-            </div>
-          ))}
+          {messages.map((msg, idx) => {
+            // Вычисление "слов" вне JSX
+            let words = '';
+            if (msg.role === 'assistant' && msg.content) {
+              words = msg.content.slice(0, 1).toLowerCase() + msg.content.slice(1);
+            }
+            return (
+              <div
+                key={idx}
+                className={`chat-bubble ${
+                  msg.role === 'user' ? 'user' : 'bot'
+                }`}
+              >
+                {msg.role === 'assistant' ? (
+                  <ReactMarkdown>{`${user.data.name}, ${words}`}</ReactMarkdown>
+                ) : (
+                  msg.content
+                )}
+              </div>
+            );
+          })}
         </div>
 
         <div className="chat-input-row">

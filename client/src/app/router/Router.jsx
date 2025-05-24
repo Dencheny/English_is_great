@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router';
+import { Routes, Route } from 'react-router';
 import Layout from '../layout/Layout';
 import ThemeCardPage from '../../pages/themeCard/ThemeCardPage';
 import MyCardPage from '../../pages/myCard/MyCardPage';
@@ -9,9 +9,7 @@ import SignUpPage from '../../pages/signUpPage/SignUpPage';
 import ThemeNamePage from '../../pages/themeName/ThemeNamePage';
 import CreateWordPage from '../../pages/createWordPage/CreateWordPage';
 import EdditWordPage from '../../pages/edditWord/EdditWordPage';
-
 import ProtectedRoute from '../../shared/hocs/ProtectedRoute';
-import EdditForm from '../../feature/edditForm/EdditForm';
 import ChatBot from '../../feature/chatBot/ChatBot';
 import Error404 from '../../feature/error404/Error404';
 
@@ -60,9 +58,9 @@ export default function Router({ setUser, logoutHandler, user }) {
             path='/edditWord/:id'
             element={<EdditWordPage user={user} />}
           />
+        <Route path='/chatGPT' element={<ChatBot setUser={setUser} user={user} />} />
           {/*Добавил setUser()*/}
         </Route>
-        <Route path='/chatGPT' element={<ChatBot user={user} />} />
 
         {/*Роут по умолчанию*/}
         <Route

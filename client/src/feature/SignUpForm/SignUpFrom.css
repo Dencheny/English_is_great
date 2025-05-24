@@ -64,3 +64,17 @@
 .login-button:hover {
   background-color: #1976d2;
 }
+
+.secondary-btn {
+  margin-top: 35px;
+  background: none;
+  border: none;
+  color: #4f98ff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.secondary-btn:hover {
+  color: #317ce3;
+}

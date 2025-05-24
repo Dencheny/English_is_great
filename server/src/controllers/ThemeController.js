@@ -36,6 +36,26 @@ class ThemeConroller {
         res.status(500).json(formatResponse(500, 'Internal Server Error'));
       }
   }
+
+    static async addAllTheme(req, res) {
+    const data = req.body;
+    if (!Array.isArray(data) || data.length === 0) {
+      return res
+        .status(400)
+        .json(formatResponse(400, 'Список тем пуст или невалиден'));
+    }
+    try {
+      const insertedThemes = await ThemeService.addAllThemes(data);
+      res.status(201).json(formatResponse(201, 'Success', insertedThemes));
+    } catch (error) {
+      if (error.message === 'Theme already exists') {
+        res.status(400).json(formatResponse(400, 'Theme already exists'));
+      } else {
+        console.error(error);
+        res.status(500).json(formatResponse(500, 'Internal Server Error'));
+      }
+    }
+  }
 }
 
 module.exports = ThemeConroller

@@ -1,7 +1,7 @@
 import React from 'react';
 import UserValidate from '../../entities/user/api/UserValidate';
 import UserApi from '../../entities/user/api/UserApi';
-import axiosInstance, { setAccessToken } from '../../shared/lib/axiosInstance';
+import { setAccessToken } from '../../shared/lib/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import './SignUpFrom.css';
 
@@ -82,7 +82,7 @@ function SignUpForm({ setUser }) {
             Зарегистрироваться
           </button>
         </form>
-        <button className="login-button" onClick={() => navigate('/login')}>
+        <button className="secondary-btn" onClick={() => navigate('/login')}>
           Уже есть аккаунт
         </button>
       </div>
