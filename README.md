@@ -1,6 +1,5 @@
 ---
 
-````markdown
 # 🇬🇧 Английский-легко! — Учим слова с флеш-карточками
 
 <img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8ac211aa-96a2-4a67-bb11-8130b2fe7279/flash-card.png" alt="Логотип" width="200"/>
